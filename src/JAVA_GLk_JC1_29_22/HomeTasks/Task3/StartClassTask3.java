@@ -1,4 +1,5 @@
 package JAVA_GLk_JC1_29_22.HomeTasks.Task3;
+
 /**
  * Класс StartClassTask3.
  * В данном класе реализован метод main().
