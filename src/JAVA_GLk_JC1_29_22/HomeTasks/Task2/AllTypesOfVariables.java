@@ -150,6 +150,7 @@ public class AllTypesOfVariables {
         this.variableGlobalPrimitiveBoolean = variableGlobalPrimitiveBoolean;
     }
 
+
     public char getPrimitiveChar() {
 
         return variableGlobalPrimitiveChar;
