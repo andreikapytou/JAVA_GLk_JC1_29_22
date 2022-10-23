@@ -27,7 +27,8 @@ public class Colors {
     public static final String NAME_BASIC_COLOR_BLUE     = "ГОЛУБОЙ";   // Голубой.
     public static final String NAME_BASIC_COLOR_NAVYBLUE = "СИНИЙ";     // Синий.
     public static final String NAME_BASIC_COLOR_PURPLE   = "ФИОЛЕТОВЫЙ"; // Фиолетовый.
-    public static final String NAME_BASIC_COLOR_NONE     = "НЕИЗВЕСТНЫЙ_ЦВЕТ"; // Неизвестный цвет..
+    public static final String NAME_BASIC_COLOR_NONE     = "НЕИЗВЕСТНЫЙ_ЦВЕТ"; // Неизвестный цвет.
+    public static final String NAME_MIX_COLOR_NONE_NONE  = NAME_BASIC_COLOR_NONE + "-" + NAME_BASIC_COLOR_NONE; // Неизвестный полу-цвет.
 
     // Название полу-цветов.
     // Смешение различных цветов радуги с КРАСНЫМ цветом.
@@ -38,6 +39,7 @@ public class Colors {
     public static final String NAME_MIX_COLOR_RED_BLUE     = "КРАСНO-"+NAME_BASIC_COLOR_BLUE;
     public static final String NAME_MIX_COLOR_RED_NAVYBLUE = "КРАСНO-"+NAME_BASIC_COLOR_NAVYBLUE;
     public static final String NAME_MIX_COLOR_RED_PURPLE   = "КРАСНO-"+NAME_BASIC_COLOR_PURPLE;
+    public static final String NAME_MIX_COLOR_RED_NONE     = "КРАСНO-"+ NAME_BASIC_COLOR_NONE;
 
     // Смешение цветов радуги с ОРАНЖЕВЫМ цветом.
     public static final String NAME_MIX_COLOR_ORANGE_RED      = "ОРАНЖЕВО-"+NAME_BASIC_COLOR_RED;
@@ -47,6 +49,7 @@ public class Colors {
     public static final String NAME_MIX_COLOR_ORANGE_BLUE     = "ОРАНЖЕВО-"+NAME_BASIC_COLOR_BLUE;
     public static final String NAME_MIX_COLOR_ORANGE_NAVYBLUE = "ОРАНЖЕВО-"+NAME_BASIC_COLOR_NAVYBLUE;
     public static final String NAME_MIX_COLOR_ORANGE_PURPLE   = "ОРАНЖЕВО-"+NAME_BASIC_COLOR_PURPLE;
+    public static final String NAME_MIX_COLOR_ORANGE_NONE     = "ОРАНЖЕВО-"+ NAME_BASIC_COLOR_NONE;
 
     // Смешение различных цветов радуги с ЖЕЛТЫМ цветом.
     public static final String NAME_MIX_COLOR_YELLOW_RED      = "ЖЕЛТО-"+NAME_BASIC_COLOR_RED;
@@ -56,6 +59,7 @@ public class Colors {
     public static final String NAME_MIX_COLOR_YELLOW_BLUE     = "ЖЕЛТО-"+NAME_BASIC_COLOR_BLUE;
     public static final String NAME_MIX_COLOR_YELLOW_NAVYBLUE = "ЖЕЛТО-"+NAME_BASIC_COLOR_NAVYBLUE;
     public static final String NAME_MIX_COLOR_YELLOW_PURPLE   = "ЖЕЛТО-"+NAME_BASIC_COLOR_PURPLE;
+    public static final String NAME_MIX_COLOR_YELLOW_NONE     = "ЖЕЛТО-"+ NAME_BASIC_COLOR_NONE;
 
     // Смешение различных цветов радуги с ЗЕЛЕНЫМ цветом.
     public static final String NAME_MIX_COLOR_GREEN_RED      = "ЗЕЛЕНО"+NAME_BASIC_COLOR_RED;
@@ -65,6 +69,7 @@ public class Colors {
     public static final String NAME_MIX_COLOR_GREEN_BLUE     = "ЗЕЛЕНО-"+NAME_BASIC_COLOR_BLUE;
     public static final String NAME_MIX_COLOR_GREEN_NAVYBLUE = "ЗЕЛЕНО-"+NAME_BASIC_COLOR_NAVYBLUE;
     public static final String NAME_MIX_COLOR_GREEN_PURPLE   = "ЗЕЛЕНО-"+NAME_BASIC_COLOR_PURPLE;
+    public static final String NAME_MIX_COLOR_GREEN_NONE     = "ЗЕЛЕНО-"+NAME_BASIC_COLOR_NONE;
 
     // Смешение различных цветов радуги с ГОЛУБЫМ цветом.
     public static final String NAME_MIX_COLOR_BLUE_RED      = "ГОЛУБО"+NAME_BASIC_COLOR_RED;
@@ -74,6 +79,7 @@ public class Colors {
     public static final String NAME_MIX_COLOR_BLUE_BLUE     = "ГОЛУБО-"+NAME_BASIC_COLOR_BLUE;
     public static final String NAME_MIX_COLOR_BLUE_NAVYBLUE = "ГОЛУБО-"+NAME_BASIC_COLOR_NAVYBLUE;
     public static final String NAME_MIX_COLOR_BLUE_PURPLE   = "ГОЛУБО-"+NAME_BASIC_COLOR_PURPLE;
+    public static final String NAME_MIX_COLOR_BLUE_NONE     = "ГОЛУБО-"+NAME_BASIC_COLOR_NONE;
 
     // Смешение различных цветов радуги с СИНИМ цветом.
     public static final String NAME_MIX_COLOR_NAVYBLUE_RED      = "СИНЕ"+NAME_BASIC_COLOR_RED;
@@ -83,6 +89,7 @@ public class Colors {
     public static final String NAME_MIX_COLOR_NAVYBLUE_BLUE     = "СИНЕ-"+NAME_BASIC_COLOR_BLUE;
     public static final String NAME_MIX_COLOR_NAVYBLUE_NAVYBLUE = "СИНЕ-"+NAME_BASIC_COLOR_NAVYBLUE;
     public static final String NAME_MIX_COLOR_NAVYBLUE_PURPLE   = "СИНЕ-"+NAME_BASIC_COLOR_PURPLE;
+    public static final String NAME_MIX_COLOR_NAVYBLUE_NONE     = "СИНЕ-"+NAME_BASIC_COLOR_NONE;
 
     // Смешение различных цветов радуги с ФИОЛЕТОВЫМ цветом.
     public static final String NAME_MIX_COLOR_PURPLE_RED      = "ФИОЛЕТОВО"+NAME_BASIC_COLOR_RED;
@@ -92,6 +99,7 @@ public class Colors {
     public static final String NAME_MIX_COLOR_PURPLE_BLUE     = "ФИОЛЕТОВО-"+NAME_BASIC_COLOR_BLUE;
     public static final String NAME_MIX_COLOR_PURPLE_NAVYBLUE = "ФИОЛЕТОВО-"+NAME_BASIC_COLOR_NAVYBLUE;
     public static final String NAME_MIX_COLOR_PURPLE_PURPLE   = "ФИОЛЕТОВО-"+NAME_BASIC_COLOR_PURPLE;
+    public static final String NAME_MIX_COLOR_PURPLE_NONE     = "ФИОЛЕТОВО-"+NAME_BASIC_COLOR_NONE;
 
     // Смешение различных цветов радуги с НЕИЗВЕСТНЫМ_ЦВЕТОМ цветом.
     public static final String NAME_MIX_COLOR_DEFAULT_RED      = NAME_BASIC_COLOR_NONE+"-"+NAME_BASIC_COLOR_RED;
@@ -106,3 +114,4 @@ public class Colors {
 
     }
 }
+

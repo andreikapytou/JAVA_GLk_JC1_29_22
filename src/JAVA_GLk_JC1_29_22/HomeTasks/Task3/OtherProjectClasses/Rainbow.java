@@ -116,11 +116,17 @@ public class Rainbow {
 
                 nameBasicColor =  Colors.NAME_BASIC_COLOR_PURPLE;
                 break;
+
+            default :
+
+                nameBasicColor = nameBasicColor + "\nОшибка. Ввееднный номер цвета №: " + codeBasicColor + " не входит в диапазон от 1 .. 7 \n";
+                break;
         }
 
         return nameBasicColor;
     }
 
+    // Перегрузка метода.
     private String identifyNameColor(int codeBasicColor1, int codeBasicColor2) {
 
         String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
@@ -215,7 +221,7 @@ public class Rainbow {
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_RED_PURPLE;
+                nameMixColor =  Colors.NAME_MIX_COLOR_RED_NONE;
                 break;
         }
 
@@ -262,6 +268,11 @@ public class Rainbow {
 
                 nameMixColor =  Colors.NAME_MIX_COLOR_ORANGE_PURPLE;
                 break;
+
+            default :
+
+                nameMixColor =  Colors.NAME_MIX_COLOR_ORANGE_NONE;
+                break;
         }
 
         return nameMixColor;
@@ -306,6 +317,11 @@ public class Rainbow {
             case Colors.COD_BASIC_COLOR_PURPLE:
 
                 nameMixColor =  Colors.NAME_MIX_COLOR_YELLOW_PURPLE;
+                break;
+
+            default :
+
+                nameMixColor =  Colors.NAME_MIX_COLOR_YELLOW_NONE;
                 break;
         }
 
@@ -352,6 +368,11 @@ public class Rainbow {
 
                 nameMixColor =  Colors.NAME_MIX_COLOR_GREEN_PURPLE;
                 break;
+
+            default :
+
+                nameMixColor =  Colors.NAME_MIX_COLOR_GREEN_NONE;
+                break;
         }
 
         return nameMixColor;
@@ -396,6 +417,11 @@ public class Rainbow {
             case Colors.COD_BASIC_COLOR_PURPLE:
 
                 nameMixColor =  Colors.NAME_MIX_COLOR_BLUE_PURPLE;
+                break;
+
+            default :
+
+                nameMixColor =  Colors.NAME_MIX_COLOR_BLUE_NONE;
                 break;
         }
 
@@ -442,6 +468,11 @@ public class Rainbow {
 
                 nameMixColor =  Colors.NAME_MIX_COLOR_NAVYBLUE_PURPLE;
                 break;
+
+            default :
+
+                nameMixColor =  Colors.NAME_MIX_COLOR_NAVYBLUE_NONE;
+                break;
         }
 
         return nameMixColor;
@@ -486,6 +517,11 @@ public class Rainbow {
             case Colors.COD_BASIC_COLOR_PURPLE:
 
                 nameMixColor =  Colors.NAME_MIX_COLOR_PURPLE_PURPLE;
+                break;
+
+            default :
+
+                nameMixColor =  Colors.NAME_MIX_COLOR_PURPLE_NONE;
                 break;
         }
 
@@ -535,11 +571,11 @@ public class Rainbow {
 
             default :
 
-                nameMixColor = Colors.NAME_BASIC_COLOR_NONE+"-"+Colors.NAME_BASIC_COLOR_NONE;
+                nameMixColor = Colors.NAME_MIX_COLOR_NONE_NONE;
                 break;
         }
 
         return nameMixColor;
     }
-
 }
+
