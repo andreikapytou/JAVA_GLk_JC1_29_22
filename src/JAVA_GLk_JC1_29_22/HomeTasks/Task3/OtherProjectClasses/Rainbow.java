@@ -4,8 +4,11 @@ import java.util.Scanner;
 
 /**
  * Класс Rainbow.
- * В данном класе создны глобальные переменные всех типов(примитивы и обертки).
- * И для каждой глобальной переменной реализованы методы - геттеры и сеттеры.
+ * Реализован вывод на консоль названия оснвоного цветва по его введеному номеру.
+ * Реализован вывод на консоль названия полу-цветва по его введенным номерам двух базовых цветов.
+ * Глобальные переемнные в данном класе не используются - так как в заадче
+ * не пердусматривалось хранеие и передача введенных данных в другие объкты.
+ * Все переменные в данном класе - локальные.
  *
  * @version 1.0
  * @author  Andrei Kapytou (Андрей Копытов)
@@ -19,12 +22,14 @@ public class Rainbow {
 
     }
 
+    // Начало работы программы. В данном методе так или иначе вызываются все остальные методы.
     public void runDialogUser() {
 
         int numMode = 0;
-        int codeColor1 = 0;
-        int codeColor2 = 0;
-        String resultColor = Colors.NAME_BASIC_COLOR_NONE;
+        int codeInputColor1 = 0;
+        int codeInputColor2 = 0;
+        int codeIdentificationColor = 0;
+        String nameIdentificationColor = Colors.NAME_BASIC_COLOR_NONE;
 
         System.out.println("\nРежим №1. Для идентификации названия основного цвета введите цифру - 1");
         System.out.println("Режим №2. Для идентификации названия полу-цвета введите цифру - 2");
@@ -33,29 +38,34 @@ public class Rainbow {
 
         if ( numMode == MODE_BASIC_COLOR ) {
 
-            resultColor = identifyNameColor( inputConsoleData("\nВведите номер основного цвета в диапазоне от 1 .. 7 : ") );
+            codeInputColor1 = inputConsoleData("\nВведите номер основного цвета в диапазоне от 1 .. 7 : ");
+            nameIdentificationColor = identifyNameColor( codeInputColor1 );
 
         } else if ( numMode == MODE_MIXED_COLOR ) {
 
-            codeColor1 =  inputConsoleData("\nВведите номер основного цвета №1 в диапазоне от 1 .. 7 : ");
-            codeColor2 =  inputConsoleData("Введите номер основного цвета №2 в диапазоне от 1 .. 7 : ");
+            codeInputColor1 =  inputConsoleData("\nВведите номер основного цвета №1 в диапазоне от 1 .. 7 : ");
+            codeInputColor2 =  inputConsoleData("Введите номер основного цвета №2 в диапазоне от 1 .. 7 : ");
 
             System.out.printf("\nНазвание основного цвета №1 согласно его №: %d = %s \n",
-                                codeColor1, identifyNameColor( codeColor1 ));
+                                codeInputColor1, identifyNameColor( codeInputColor1 ));
             System.out.printf("Название основного цвета №2 согласно его №: %d = %s \n",
-                                codeColor2, identifyNameColor( codeColor2 ));
+                                codeInputColor2, identifyNameColor( codeInputColor2 ));
 
-            resultColor = identifyNameColor( codeColor1, codeColor2);
+            nameIdentificationColor = identifyNameColor( codeInputColor1, codeInputColor2);
 
         } else {
 
             System.out.printf("\nВведен-Задан неизвестный №: %d режим работы.\nЗавершение работы программы.\n", numMode);
         }
 
-        printResultIdentificationColor(numMode, resultColor);
+        if ( (numMode == MODE_BASIC_COLOR) || (numMode == MODE_MIXED_COLOR) ) {
+
+                codeIdentificationColor = calculateCodeIdentificationColor(numMode,codeInputColor1, codeInputColor2);
+                printCodeNameIdentificationColor(codeIdentificationColor, nameIdentificationColor);
+        }
     }
 
-
+    // Ввод входных данных из консоли. Метод предусматривает ввод строки-приглашения перед вводом данных.
     private int inputConsoleData(String strWelcomeInput) {
 
         System.out.print(strWelcomeInput);
@@ -64,18 +74,40 @@ public class Rainbow {
         return inputData.nextInt();
     }
 
-    private void printResultIdentificationColor(int numMode, String colorResult){
+    // Рассчет номера ввееднного цвета. Актуально для полу-цветов.
+    private int calculateCodeIdentificationColor( int numMode, int codeBasicColor1, int codeBasicColor2) {
 
-        if ( numMode == MODE_BASIC_COLOR )  {
+        int code = 0;
+        String strCodeColor1 = Integer.toString(codeBasicColor1);
+        String strCodeColor2 = Integer.toString(codeBasicColor2);
+        String strResultCodeColor = strCodeColor1 + strCodeColor2;
 
-                System.out.println("\nНазвание основного цвета = " + colorResult);
+        if ( numMode == 1 ) {
 
-        } else if ( numMode == MODE_MIXED_COLOR ) {
+                code = codeBasicColor1;
 
-            System.out.println("\nНазвание полу-цвета = " + colorResult);
+        } else if ( numMode == 2 ) {
+
+                code = Integer.parseInt(strResultCodeColor);
+        }
+
+        return code;
+    }
+
+    // Вывод на консоль результата идентификации. Название цвета и его номер.
+    private void printCodeNameIdentificationColor( int codeColor, String colorResult){
+
+        if ( colorResult.contains("-") )  {
+
+                System.out.println("\nНазвание полу-цвета = " + colorResult + " № = " + codeColor);
+
+        } else  {
+
+                System.out.println("\nОсновной цвета. Название = " + colorResult + " № = " + codeColor);
         }
     }
 
+    // Иденитификация-идентифицировать Нозвание цвета по его введенному номеру-коду.
     private String identifyNameColor(int codeBasicColor) {
 
         String nameBasicColor = Colors.NAME_BASIC_COLOR_NONE;
@@ -126,7 +158,7 @@ public class Rainbow {
         return nameBasicColor;
     }
 
-    // Перегрузка метода.
+    // Перегрузка метода. Два входных параметра. Двано номера-кода цвета.
     private String identifyNameColor(int codeBasicColor1, int codeBasicColor2) {
 
         String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
@@ -178,6 +210,9 @@ public class Rainbow {
         return nameMixColor;
     }
 
+    /* Идентификация-идентифицировать название полу-цвета.
+       Метод перебирает все комбинации 7-и цветов радуги с Красным цветом.
+       Первый введенный базовый цвет - Красный. */
     private String identifyNameMixColorRed(int codeBasicColor) {
 
         String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
@@ -478,6 +513,9 @@ public class Rainbow {
         return nameMixColor;
     }
 
+    /* Идентификация-идентифицировать название полу-цвета.
+       Метод перебирает все комбинации 7-и цветов радуги с Фиолетовым цветом.
+       Первый введенный базовый цвет - Фиолетовый. */
     private String identifyNameMixColorPurple(int codeBasicColor) {
 
         String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
@@ -528,6 +566,9 @@ public class Rainbow {
         return nameMixColor;
     }
 
+    /* Идентификация-идентифицировать название полу-цвета.
+       Метод перебирает все комбинации 7-и цветов радуги с НЕИЗВЕСТНЫМ цветом.
+       Первый введенный базовый цвет - НЕИЗВЕСТНЫЙ. */
     private String identifyNameMixColorDefault(int codeBasicColor) {
 
         String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
