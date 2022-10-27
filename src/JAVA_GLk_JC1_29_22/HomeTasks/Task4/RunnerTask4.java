@@ -62,6 +62,7 @@ public class RunnerTask4 {
         }
         while (i < catsDoWhile.length);
 
+        // Создание 5-ть котиклов.
         for (int j = 0; j < catsForeach.length; j++) /* Без локальных переменных int ageCat и int idxNameCat - но сложно читаемо. */
         {
             catsForeach[j] = new CatTask4(MyRandomTask4.nextRandomIntValueRange(MIN_VALUE_RANDOM_RANGE, MAX_VALUE_RANDOM_RANGE),
