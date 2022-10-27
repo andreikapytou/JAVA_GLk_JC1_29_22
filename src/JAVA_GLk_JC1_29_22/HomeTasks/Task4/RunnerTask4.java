@@ -82,6 +82,7 @@ public class RunnerTask4 {
         }
 
         // Бонусая часть - работа переопредеелнных метода equals() и метода hashCode().
+        System.out.println("Начало бонусной-дополнительной части ДЗ. Генериование методов.");
         System.out.printf(" equals = %b  hashCode = %b \n", catsFor[0].equals(catsFor[1]) , ( catsFor[0].hashCode() == catsFor[1].hashCode() ) );
         catsFor[0].setAge(50);
         catsFor[0].setName("Один");
