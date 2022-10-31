@@ -60,8 +60,7 @@ public class MatrixWork {
                }
             }
             return true;
-        }
-        else {
+        } else {
                 return false;
         }
     }
