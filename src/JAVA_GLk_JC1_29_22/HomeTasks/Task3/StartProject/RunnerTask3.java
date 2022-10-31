@@ -11,7 +11,7 @@ import JAVA_GLk_JC1_29_22.HomeTasks.Task3.OtherProjectClasses. *;
  * @version 1.0
  * @author  Andrei Kapytou (Андрей Копытов)
  */
-public class StartClassTask3 {
+public class RunnerTask3 {
 
     /* Объявление метода main() */
     public static void main(String[] args) { /* Заголовок метода */

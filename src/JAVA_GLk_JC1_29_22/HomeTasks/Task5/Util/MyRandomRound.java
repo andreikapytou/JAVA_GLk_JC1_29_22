@@ -1,20 +1,16 @@
-package JAVA_GLk_JC1_29_22.HomeTasks.Task4;
-
-import java.lang .Math;
+package JAVA_GLk_JC1_29_22.HomeTasks.Task5.Util;
 
 /**
- * Класс MyRandomTask4.
- *
- * В данном класе реализован метод nextRandomIntValueRange().
- * Метод может возвращать рандомныое значение типа int в заданном диапозоне от minValueRange до maxValueRange.
- *  Метод может возвращать рандомныое значение типа int в заданном диапозоне от 0 до maxValueRange.
+ * Класс MyRandomRound.
  *
  * @version 1.0
  * @author  Andrei Kapytou (Андрей Копытов)
  */
-public class MyRandomTask4 {
+public class MyRandomRound {
 
-    public MyRandomTask4() {
+    private static final double CRITERION_ROUND = 1.7;
+
+    public MyRandomRound() {
 
     }
 
@@ -39,4 +35,23 @@ public class MyRandomTask4 {
         return (int)( Math.random() * (maxValueRange + 1)) ; // (max + 1)
     }
 
+    public static double nextRandomDoubleValueRange( int valueRange ) {
+
+        return  Math.random() + valueRange;
+    }
+
+    public static double myRound( double valueRound){
+
+        if (valueRound >= CRITERION_ROUND) {
+                return Math.ceil(valueRound);
+        } else {
+                return Math.floor(valueRound);
+        }
+    }
+
+    public static char nextRandomChar(String sourceRandomString) {
+
+        char[] arrChar = sourceRandomString.toCharArray();
+        return arrChar[ MyRandomRound.nextRandomIntValueRange(arrChar.length-1) ];
+    }
 }

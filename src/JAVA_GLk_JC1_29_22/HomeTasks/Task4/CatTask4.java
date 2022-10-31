@@ -74,6 +74,7 @@ public class CatTask4 {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(this.age, this.name);
     }
 

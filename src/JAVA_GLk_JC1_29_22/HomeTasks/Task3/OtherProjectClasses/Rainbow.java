@@ -15,33 +15,37 @@ import java.util.Scanner;
  */
 public class Rainbow {
 
-    public static final int MODE_BASIC_COLOR = 1; // Номер режима. Режим определения основного цвета.
-    public static final int MODE_MIXED_COLOR = 2; // Номер режима. Режим опредеелния полу-цвета (смешанного цвета).
+    private static final int MODE_BASIC_COLOR = 1; // Номер режима. Режим определения основного цвета.
+    private static final int MODE_MIXED_COLOR = 2; // Номер режима. Режим опредеелния полу-цвета (смешанного цвета).
+
+    private int numMode;
+    private int codeIdentificationColor;
+    private String nameIdentificationColor;
 
     public Rainbow() { // Конструктор класса Rainbow
 
     }
 
     // Начало работы программы. В данном методе так или иначе вызываются все остальные методы.
-    public void runDialogUser() {
+    public int runDialogUser() {
 
-        int numMode = 0;
+       // int numMode = 0;
         int codeInputColor1 = 0;
         int codeInputColor2 = 0;
-        int codeIdentificationColor = 0;
-        String nameIdentificationColor = Colors.NAME_BASIC_COLOR_NONE;
+      //  int codeIdentificationColor = 0;
+    //    String nameIdentificationColor = Colors.NAME_BASIC_COLOR_NONE;
 
         System.out.println("\nРежим №1. Для идентификации названия основного цвета введите цифру - 1");
         System.out.println("Режим №2. Для идентификации названия полу-цвета введите цифру - 2");
 
-        numMode = inputConsoleData("\nВведите-Задайте номер режима: ");
+        this.numMode = inputConsoleData("\nВведите-Задайте номер режима: ");
 
-        if ( numMode == MODE_BASIC_COLOR ) {
+        if ( this.numMode == MODE_BASIC_COLOR ) {
 
             codeInputColor1 = inputConsoleData("\nВведите номер основного цвета в диапазоне от 1 .. 7 : ");
-            nameIdentificationColor = identifyNameColor( codeInputColor1 );
+            this.nameIdentificationColor = identifyNameColor( codeInputColor1 );
 
-        } else if ( numMode == MODE_MIXED_COLOR ) {
+        } else if ( this.numMode == MODE_MIXED_COLOR ) {
 
             codeInputColor1 =  inputConsoleData("\nВведите номер основного цвета №1 в диапазоне от 1 .. 7 : ");
             codeInputColor2 =  inputConsoleData("Введите номер основного цвета №2 в диапазоне от 1 .. 7 : ");
@@ -51,18 +55,23 @@ public class Rainbow {
             System.out.printf("Название основного цвета №2 согласно его №: %d = %s \n",
                                 codeInputColor2, identifyNameColor( codeInputColor2 ));
 
-            nameIdentificationColor = identifyNameColor( codeInputColor1, codeInputColor2);
+            this.nameIdentificationColor = identifyNameColor( codeInputColor1, codeInputColor2);
 
         } else {
 
             System.out.printf("\nВведен-Задан неизвестный №: %d режим работы.\nЗавершение работы программы.\n", numMode);
+
+            return -1;
         }
 
-        if ( (numMode == MODE_BASIC_COLOR) || (numMode == MODE_MIXED_COLOR) ) {
+        this.codeIdentificationColor = calculateCodeIdentificationColor(numMode,codeInputColor1, codeInputColor2);
+        printCodeNameIdentificationColor(this.codeIdentificationColor, this.nameIdentificationColor);
 
-                codeIdentificationColor = calculateCodeIdentificationColor(numMode,codeInputColor1, codeInputColor2);
-                printCodeNameIdentificationColor(codeIdentificationColor, nameIdentificationColor);
-        }
+        return 0;
+    }
+
+    private int inputMode(String str) {
+        return inputConsoleData("\nВведите-Задайте номер режима: ");
     }
 
     // Ввод входных данных из консоли. Метод предусматривает ввод строки-приглашения перед вводом данных.
@@ -110,104 +119,91 @@ public class Rainbow {
     // Иденитификация-идентифицировать Нозвание цвета по его введенному номеру-коду.
     private String identifyNameColor(int codeBasicColor) {
 
-        String nameBasicColor = Colors.NAME_BASIC_COLOR_NONE;
-
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
-
-                nameBasicColor = Colors.NAME_BASIC_COLOR_RED;
-                break;
-
+                return Colors.NAME_BASIC_COLOR_RED;
             case Colors.COD_BASIC_COLOR_ORANGE:
-
-                nameBasicColor = Colors.NAME_BASIC_COLOR_ORANGE;
-                break;
-
+                return Colors.NAME_BASIC_COLOR_ORANGE;
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameBasicColor = Colors.NAME_BASIC_COLOR_YELLOW;
-                break;
+                return Colors.NAME_BASIC_COLOR_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameBasicColor =  Colors.NAME_BASIC_COLOR_GREEN;
-                break;
+                return  Colors.NAME_BASIC_COLOR_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameBasicColor =  Colors.NAME_BASIC_COLOR_BLUE;
-                break;
+                return  Colors.NAME_BASIC_COLOR_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameBasicColor =  Colors.NAME_BASIC_COLOR_NAVYBLUE;
-                break;
+                return  Colors.NAME_BASIC_COLOR_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameBasicColor =  Colors.NAME_BASIC_COLOR_PURPLE;
-                break;
+                return  Colors.NAME_BASIC_COLOR_PURPLE;
+                
 
             default :
 
-                nameBasicColor = nameBasicColor + "\nОшибка. Ввееднный номер цвета №: " + codeBasicColor + " не входит в диапазон от 1 .. 7 \n";
-                break;
+                return Colors.NAME_BASIC_COLOR_NONE + "\n Ошибка. Ввееднный номер цвета №: " + codeBasicColor + " не входит в диапазон от 1 .. 7 \n";
+                
         }
-
-        return nameBasicColor;
     }
 
     // Перегрузка метода. Два входных параметра. Двано номера-кода цвета.
     private String identifyNameColor(int codeBasicColor1, int codeBasicColor2) {
-
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
+        
 
         switch (codeBasicColor1) {
 
            case Colors.COD_BASIC_COLOR_RED:
 
-               nameMixColor = identifyNameMixColorRed(codeBasicColor2);
-               break;
+               return identifyNameMixColorRed(codeBasicColor2);
+               
 
            case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = identifyNameMixColorOrange(codeBasicColor2);
-                break;
+                return identifyNameMixColorOrange(codeBasicColor2);
+                
 
            case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = identifyNameMixColorYellow(codeBasicColor2);
-                break;
+                return identifyNameMixColorYellow(codeBasicColor2);
+                
 
            case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  identifyNameMixColorGreen(codeBasicColor2);
-                break;
+                return  identifyNameMixColorGreen(codeBasicColor2);
+                
 
            case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  identifyNameMixColorBlue(codeBasicColor2);
-                break;
+                return  identifyNameMixColorBlue(codeBasicColor2);
+                
 
            case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  identifyNameMixColorNavyBlue(codeBasicColor2);
-                break;
+                return  identifyNameMixColorNavyBlue(codeBasicColor2);
+                
 
            case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  identifyNameMixColorPurple(codeBasicColor2);
-                break;
+                return  identifyNameMixColorPurple(codeBasicColor2);
+                
 
            default :
 
-               nameMixColor = identifyNameMixColorDefault(codeBasicColor2);
-               break;
+               return identifyNameMixColorDefault(codeBasicColor2);
+               
 
         }
-
-        return nameMixColor;
     }
 
     /* Идентификация-идентифицировать название полу-цвета.
@@ -215,302 +211,295 @@ public class Rainbow {
        Первый введенный базовый цвет - Красный. */
     private String identifyNameMixColorRed(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
+        
 
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_RED_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_RED_RED;
+                
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_RED_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_RED_ORANGE;
+                
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_RED_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_RED_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_RED_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_RED_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_RED_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_RED_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_RED_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_RED_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_RED_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_RED_PURPLE;
+                
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_RED_NONE;
-                break;
+                return  Colors.NAME_MIX_COLOR_RED_NONE;
+                
         }
-
-        return nameMixColor;
     }
 
     private String identifyNameMixColorOrange(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
-
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_ORANGE_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_ORANGE_RED;
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_ORANGE_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_ORANGE_ORANGE;
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_ORANGE_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_ORANGE_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_ORANGE_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_ORANGE_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_ORANGE_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_ORANGE_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_ORANGE_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_ORANGE_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_ORANGE_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_ORANGE_PURPLE;
+                
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_ORANGE_NONE;
-                break;
+                return  Colors.NAME_MIX_COLOR_ORANGE_NONE;
+                
         }
 
-        return nameMixColor;
+        
     }
 
     private String identifyNameMixColorYellow(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
+        
 
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_YELLOW_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_YELLOW_RED;
+                
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_YELLOW_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_YELLOW_ORANGE;
+                
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_YELLOW_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_YELLOW_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_YELLOW_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_YELLOW_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_YELLOW_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_YELLOW_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_YELLOW_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_YELLOW_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_YELLOW_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_YELLOW_PURPLE;
+                
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_YELLOW_NONE;
-                break;
+                return  Colors.NAME_MIX_COLOR_YELLOW_NONE;
+                
         }
 
-        return nameMixColor;
+        
     }
 
     private String identifyNameMixColorGreen(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
 
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_GREEN_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_GREEN_RED;
+                
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_GREEN_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_GREEN_ORANGE;
+                
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_GREEN_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_GREEN_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_GREEN_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_GREEN_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_GREEN_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_GREEN_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_GREEN_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_GREEN_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_GREEN_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_GREEN_PURPLE;
+                
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_GREEN_NONE;
-                break;
+                return  Colors.NAME_MIX_COLOR_GREEN_NONE;
+                
         }
 
-        return nameMixColor;
+        
     }
 
     private String identifyNameMixColorBlue(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
+        
 
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_BLUE_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_BLUE_RED;
+                
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_BLUE_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_BLUE_ORANGE;
+                
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_BLUE_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_BLUE_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_BLUE_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_BLUE_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_BLUE_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_BLUE_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_BLUE_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_BLUE_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_BLUE_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_BLUE_PURPLE;
+                
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_BLUE_NONE;
-                break;
+                return  Colors.NAME_MIX_COLOR_BLUE_NONE;
+                
         }
 
-        return nameMixColor;
+        
     }
 
     private String identifyNameMixColorNavyBlue(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
+        
 
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_NAVYBLUE_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_NAVYBLUE_RED;
+                
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_NAVYBLUE_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_NAVYBLUE_ORANGE;
+                
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_NAVYBLUE_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_NAVYBLUE_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_NAVYBLUE_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_NAVYBLUE_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_NAVYBLUE_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_NAVYBLUE_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_NAVYBLUE_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_NAVYBLUE_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_NAVYBLUE_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_NAVYBLUE_PURPLE;
+                
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_NAVYBLUE_NONE;
-                break;
+                return  Colors.NAME_MIX_COLOR_NAVYBLUE_NONE;
+                
         }
 
-        return nameMixColor;
+        
     }
 
     /* Идентификация-идентифицировать название полу-цвета.
@@ -518,52 +507,52 @@ public class Rainbow {
        Первый введенный базовый цвет - Фиолетовый. */
     private String identifyNameMixColorPurple(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
+        
 
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_PURPLE_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_PURPLE_RED;
+                
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_PURPLE_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_PURPLE_ORANGE;
+                
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_PURPLE_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_PURPLE_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_PURPLE_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_PURPLE_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_PURPLE_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_PURPLE_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_PURPLE_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_PURPLE_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_PURPLE_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_PURPLE_PURPLE;
+                
 
             default :
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_PURPLE_NONE;
-                break;
+                return  Colors.NAME_MIX_COLOR_PURPLE_NONE;
+                
         }
 
-        return nameMixColor;
+        
     }
 
     /* Идентификация-идентифицировать название полу-цвета.
@@ -571,52 +560,52 @@ public class Rainbow {
        Первый введенный базовый цвет - НЕИЗВЕСТНЫЙ. */
     private String identifyNameMixColorDefault(int codeBasicColor) {
 
-        String nameMixColor = Colors.NAME_BASIC_COLOR_NONE;
+        
 
         switch (codeBasicColor) {
 
             case Colors.COD_BASIC_COLOR_RED:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_DEFAULT_RED;
-                break;
+                return Colors.NAME_MIX_COLOR_DEFAULT_RED;
+                
 
             case Colors.COD_BASIC_COLOR_ORANGE:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_DEFAULT_ORANGE;
-                break;
+                return Colors.NAME_MIX_COLOR_DEFAULT_ORANGE;
+                
 
             case Colors.COD_BASIC_COLOR_YELLOW:
 
-                nameMixColor = Colors.NAME_MIX_COLOR_DEFAULT_YELLOW;
-                break;
+                return Colors.NAME_MIX_COLOR_DEFAULT_YELLOW;
+                
 
             case Colors.COD_BASIC_COLOR_GREEN:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_DEFAULT_GREEN;
-                break;
+                return  Colors.NAME_MIX_COLOR_DEFAULT_GREEN;
+                
 
             case Colors.COD_BASIC_COLOR_BLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_DEFAULT_BLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_DEFAULT_BLUE;
+                
 
             case Colors.COD_BASIC_COLOR_NAVYBLUE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_DEFAULT_NAVYBLUE;
-                break;
+                return  Colors.NAME_MIX_COLOR_DEFAULT_NAVYBLUE;
+                
 
             case Colors.COD_BASIC_COLOR_PURPLE:
 
-                nameMixColor =  Colors.NAME_MIX_COLOR_DEFAULT_PURPLE;
-                break;
+                return  Colors.NAME_MIX_COLOR_DEFAULT_PURPLE;
+                
 
             default :
 
-                nameMixColor = Colors.NAME_MIX_COLOR_NONE_NONE;
-                break;
+                return Colors.NAME_MIX_COLOR_NONE_NONE;
+                
         }
 
-        return nameMixColor;
+        
     }
 }
 
