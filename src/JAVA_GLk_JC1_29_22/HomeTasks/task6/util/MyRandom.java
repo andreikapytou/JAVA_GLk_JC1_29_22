@@ -1,18 +1,16 @@
-package JAVA_GLk_JC1_29_22.HomeTasks.Task5.Util;
-
-import java.lang .Math;
+package JAVA_GLk_JC1_29_22.HomeTasks.task6.util;
 
 /**
- * Класс MyRandomRound.
+ * Класс MyRandom.
  *
  * @version 1.0
  * @author  Andrei Kapytou (Андрей Копытов)
  */
-public class MyRandomRound {
+public class MyRandom {
 
     private static final double CRITERION_ROUND = 1.7;
 
-    public MyRandomRound() {
+    public MyRandom() {
 
     }
 
@@ -42,18 +40,9 @@ public class MyRandomRound {
         return  Math.random() + valueRange;
     }
 
-    public static double myRound( double valueRound){
-
-        if (valueRound >= CRITERION_ROUND) {
-                return Math.ceil(valueRound);
-        } else {
-                return Math.floor(valueRound);
-        }
-    }
-
     public static char nextRandomChar(String sourceRandomString) {
 
         char[] arrChar = sourceRandomString.toCharArray();
-        return arrChar[ MyRandomRound.nextRandomIntValueRange(arrChar.length-1) ];
+        return arrChar[ MyRandom.nextRandomIntValueRange(arrChar.length-1) ];
     }
 }
