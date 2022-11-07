@@ -11,7 +11,7 @@ public class Deck {
     //private AbstractContainer[] arrContainers = new AbstractContainer[Const.LITTLE_MAX_NO_BIG];
     private AbstractContainer[] arrContainers;
 
-    public Deck(int numMaxContainers){
+    public Deck(int numMaxContainers) {
 
         if (numMaxContainers > 0) {
             this.numMaxContainers = numMaxContainers;
@@ -22,8 +22,7 @@ public class Deck {
         }
     }
 
-    public Deck myClone()
-    {
+    public Deck myClone() {
         Deck cloneDeck = new Deck(this.numMaxContainers);
         cloneDeck.arrContainers = this.arrContainers.clone();
         cloneDeck.countAddContainers = this.countAddContainers;
@@ -33,16 +32,17 @@ public class Deck {
         return cloneDeck;
     }
 
-    public void addArrContainers( AbstractContainer[] arrContainers ){
+    public void addArrContainers(AbstractContainer[] arrContainers) {
 
-        for( AbstractContainer nextContainer :  arrContainers) {
-                addContainer(nextContainer);
+        for (AbstractContainer nextContainer : arrContainers) {
+            addContainer(nextContainer);
         }
     }
-    public void delAllContainersInDeck( ){
 
-        while(countAddContainers != 0 ) {
-                delContainer();
+    public void delAllContainersInDeck() {
+
+        while (countAddContainers != 0) {
+            delContainer();
         }
     }
 
@@ -123,12 +123,12 @@ public class Deck {
 
     private void printNoAddContainer(AbstractContainer container) {
 
-        if (isLittleContainer(container) || isBigContainer(container) ) {
-                System.out.print("\nПалуба - заполнена. ");
-                printCountContainers();
-                printArrContainers();
-                System.out.printf("   :Конетйнер    -> %s Тип геометрии -> %s. - не может быть добавлен на палубу.\n",
-                                    typeSizeContainer(container), container.getTypeGeometry());
+        if (isLittleContainer(container) || isBigContainer(container)) {
+            System.out.print("\nПалуба - заполнена. ");
+            printCountContainers();
+            printArrContainers();
+            System.out.printf("   :Конетйнер    -> %s Тип геометрии -> %s. - не может быть добавлен на палубу.\n",
+                    typeSizeContainer(container), container.getTypeGeometry());
         } else {
             printCountContainers();
             System.out.printf("   :Конетйнер    -> %s Тип геометрии -> %s. - не может быть добавлен на палубу.\n",
@@ -143,22 +143,22 @@ public class Deck {
         } else if (isBigContainer(container)) {
             return "Большой.    ";
         }
-        return     "Нет_Размера.";
+        return "Нет_Размера.";
     }
 
-    public void printCurrentArrContainers(){
+    public void printCurrentArrContainers() {
 
         printCountContainers();
         printArrContainers();
     }
 
     private void printArrContainers() {
-        for (int i=0; i< countAddContainers; i++) {
+        for (int i = 0; i < countAddContainers; i++) {
             System.out.printf("[%d]:Контейнер №%d -> %s Тип геометрии -> %s. Диагональ=%d. Высота=%d. Плотнось=%d. Объем=%d. Масс=%d\n",
-                    i, i+1,typeSizeContainer(arrContainers[i]), arrContainers[i].getTypeGeometry(),
+                    i, i + 1, typeSizeContainer(arrContainers[i]), arrContainers[i].getTypeGeometry(),
                     arrContainers[i].calculationSizeDiagonal(), arrContainers[i].getHeight(),
                     arrContainers[i].getDensityWater(),
-                    arrContainers[i].calculateVolume(), arrContainers[i].calculateWeight() );
+                    arrContainers[i].calculateVolume(), arrContainers[i].calculateWeight());
         }
     }
 
