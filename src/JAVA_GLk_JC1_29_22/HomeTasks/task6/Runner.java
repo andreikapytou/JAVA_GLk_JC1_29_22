@@ -95,6 +95,15 @@ public class Runner {
         port.printAllContainerToPort();
 
 
+        System.out.println();
+        System.out.println("==============================================================");
+        port.delAllShipInPort();
+        arrQueueShips = port.formingArrQueueShipMultiDeck(6);
+        port.addArrShipsMultiDec(arrQueueShips.clone());
+        TotalWeight = port.calculateTotalWeightAllShips();
+        port.printAllContainerToPort();
+
+
         /*
         ShipMultiDec[]  arrShipsMultiDec = new ShipMultiDec[2];
 

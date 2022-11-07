@@ -31,7 +31,6 @@ public class Port {
             System.out.print("Новый корабль не может быть добавлен. ");
             System.out.println("Порт заполнен. Максимальное колличество кораблей = " + numMaxShip +"."+
                                 " Текущее колличесво кораблей  = " + countAddShip +".");
-
         }
     }
 
@@ -158,6 +157,66 @@ public class Port {
         return arrQueueInPortShipMultiDec;
     }
 
+    public  ShipMultiDec[] formingArrQueueShipMultiDeck( int quantityShip ){
+
+        System.out.println("\n++++++++++++++++++ СТАРТ Без параметров formingArrQueueShipMultiDeck() +++++++ \n ");
+
+        String[] arrNamesShip = {"Корабль1", "Корабль2", "Корабль3", "Корабль4", "Корабль5",
+                                 "Корабль6", "Корабль7", "Корабль8", "Корабль9", "Корабль10"};
+        ShipMultiDec[] arrQueueInPortShipMultiDec = new ShipMultiDec[quantityShip];
+
+        for(int i=0; i<arrQueueInPortShipMultiDec.length; i++ ){
+            arrQueueInPortShipMultiDec[i] = new ShipMultiDec(arrNamesShip[i] , getValueRandomQuantityDeckToShip());
+
+            int quantityDeckToShip = arrQueueInPortShipMultiDec[i].getTypeSizeDeckShip();
+            if(quantityDeckToShip == Const.DECK_ONE) {
+
+                int quantityContainer = getValueRandomQuantityContainerInDeck();
+                Deck[] arrDeckOne = new Deck[quantityDeckToShip];
+                arrDeckOne[0] = new Deck(quantityContainer);
+                arrQueueInPortShipMultiDec[i].setArrDeck(arrDeckOne.clone());
+
+                for (int j=0; j<quantityContainer; j++) {
+
+                    int sizeContainer = getValueRandomTypeSizeContainer();
+                    int height = getValueRandomHeight();
+                    int densityWater = getValueRandomDensityWater();
+                    AbstractContainer nextContainer = createRandomContainer(sizeContainer, height, densityWater);
+                    arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip, nextContainer);
+                }
+
+            } else if (quantityDeckToShip == Const.DECK_TWO ) {
+
+                int quantityContainer = getValueRandomQuantityContainerInDeck();
+                Deck[] arrDeckTwo = new Deck[quantityDeckToShip];
+                arrDeckTwo[0] = new Deck(quantityContainer);
+                arrDeckTwo[1] = new Deck(quantityContainer);
+
+                arrQueueInPortShipMultiDec[i].setArrDeck(arrDeckTwo.clone());
+
+                for (int j=0; j<quantityContainer; j++) {
+
+                    int sizeContainer1 = getValueRandomTypeSizeContainer();
+                    int height1 = getValueRandomHeight();
+                    int densityWater1 = getValueRandomDensityWater();
+                    AbstractContainer nextContainer1 = createRandomContainer(sizeContainer1, height1, densityWater1);
+                    arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip - 1, nextContainer1);
+
+                    int sizeContainer2 = getValueRandomTypeSizeContainer();
+                    int height2 = getValueRandomHeight();
+                    int densityWater2 = getValueRandomDensityWater();
+                    AbstractContainer nextContainer2 = createRandomContainer(sizeContainer2, height2, densityWater2);
+                    arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip, nextContainer2);
+                }
+
+            } else {
+                System.out.println("!!!!! Неизвестный номер Палубы");
+            }
+        }
+        System.out.println("\n++++++++++++++++++ ФИНИШ Без параметров formingArrQueueShipMultiDeck() +++++++ \n ");
+        return arrQueueInPortShipMultiDec;
+    }
+
     public void printAllContainerToPort() {
 
         System.out.println();
@@ -184,6 +243,15 @@ public class Port {
         return Const.DECK_TWO;
     }
 
+    private int getValueRandomQuantityContainerInDeck() {
+
+        int num = MyRandom.nextRandomIntValueRange(5);
+        if(num == 0 || num == 2 ){
+            return Const.LITTLE_MAX_NO_BIG;
+        }
+        return Const.BIG_MAX_NO_LITTLE;
+    }
+
     private int getValueRandomDensityWater() {
 
         int num = MyRandom.nextRandomIntValueRange(5);
@@ -192,6 +260,7 @@ public class Port {
         }
         return Const.DENSITY_WATER2;
     }
+
 
     private int getValueRandomHeight() {
         return MyRandom.nextRandomIntValueRange(Const.HEIGHT_MIN, Const.HEIGHT_MAX);
