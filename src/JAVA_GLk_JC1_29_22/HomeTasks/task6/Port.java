@@ -45,8 +45,11 @@ public class Port {
         }
     }
 
-    private void addArrShipMultiDec(ShipMultiDec nextShip) {
+    public void addArrShipsMultiDec(ShipMultiDec[] arrShip) {
 
+        for(int i=0; i<arrShip.length; i++ ){
+            addShipMultiDec(arrShip[i].myClone());
+        }
     }
 
     public void delShipMultiDec() {
@@ -66,12 +69,7 @@ public class Port {
         }
     }
 
-    public void loadShip(ShipMultiDec[] arrQueueShip){
-
-        // Внимаине - возможна ошибка arrQueueShip - неизвестной длины.
-        for(int i=0; i<arrQueueShip.length; i++ ){
-            addShipMultiDec(arrQueueShip[i].myClone());
-        }
+    public void loadShip(){
 
         int countAllContainer=0;
         for (ShipMultiDec nextShip : arrShipMultiDec) {
@@ -85,7 +83,8 @@ public class Port {
                 }
             }
         }
-        System.out.println("Общее число контейнеров = " + countAllContainer );
+        System.out.printf("Кораблей в порту %d Общее число контейнеров на всех кораблях = %d\n",
+                            countAddShip, countAllContainer );
     }
 
     public  ShipMultiDec[] formingArrQueueShipMultiDeck(int quantityShip, int quantityDeck, int typeSizeShip ){

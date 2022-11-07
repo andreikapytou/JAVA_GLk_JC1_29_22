@@ -59,8 +59,9 @@ public class Runner {
 
         Port port = new Port(5);
 
-        ShipMultiDec[] ArrQueueShip = port.formingArrQueueShipMultiDeck(5,2, 1);
-        port.loadShip(ArrQueueShip);
+        ShipMultiDec[] arrQueueShips = port.formingArrQueueShipMultiDeck(5,2, 1);
+        port.addArrShipsMultiDec(arrQueueShips);
+        port.loadShip();
         port.printAllContainerToPort();
 
         /*
