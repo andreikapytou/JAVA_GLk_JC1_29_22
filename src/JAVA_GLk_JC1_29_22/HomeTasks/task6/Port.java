@@ -22,21 +22,6 @@ public class Port {
         }
     }
 
-    public int calculateTotalWeightAllShips() {
-        int TotalWeightAllShips = 0;
-        for (ShipMultiDec nextShip : arrShipMultiDec) {
-            Deck[] arrDeck = nextShip.getArrDeck();
-            for(Deck nextDec : arrDeck){
-                AbstractContainer[] arrContainer = nextDec.getArrContainers();
-                for (AbstractContainer nextContainer : arrContainer ) {
-                    int weighNextOneContainer = nextContainer.calculateWeight();
-                    TotalWeightAllShips = TotalWeightAllShips + weighNextOneContainer;
-                }
-            }
-        }
-        return TotalWeightAllShips;
-    }
-
     private void addShipMultiDec(ShipMultiDec nextShip) {
 
         if( countAddShip <  arrShipMultiDec.length  ) {
@@ -67,6 +52,20 @@ public class Port {
         }
     }
 
+    public void delContainerToDeckByNumberInShip(int numShip, int numDeck) {
+
+        if( numShip >0 && numShip <= countAddShip ) {
+            arrShipMultiDec[numShip-1].delContainerToDeckByNumber(numDeck);
+        }
+    }
+
+    public void delContainersToDeckByNumberInShip(int numShip, int numDeck) {
+
+        if( numShip >0 && numShip <= countAddShip ) {
+            arrShipMultiDec[numShip-1].delAllContainersInDeckByNumber(numDeck);
+        }
+    }
+
     public void delAllShipInPort( ){
 
         while(countAddShip != 0 ) {
@@ -74,21 +73,25 @@ public class Port {
         }
     }
 
-    public void loadShip(){
+    public int calculateTotalWeightAllShips(){
 
-        int countAllContainer=0;
-        for (ShipMultiDec nextShip : arrShipMultiDec) {
-            Deck[] arrDeck = nextShip.getArrDeck();
+        int TotalWeightAllShips = 0;
+        int countAllContainer = 0;
+
+        for (int j=0; j<countAddShip; j++) {
+            Deck[] arrDeck = arrShipMultiDec[j].getArrDeck();
             for(Deck nextDec : arrDeck){
                 AbstractContainer[] arrContainer = nextDec.getArrContainers();
                 for (int i=0; i<nextDec.getCountAddContainers(); i++ ) {
-                    System.out.println(arrContainer[i].getTypeGeometry() + " " + arrContainer[i].getTypeSize()+ " " +  arrContainer[i].calculateWeight());
+                    //System.out.println(arrContainer[i].getTypeGeometry() + " " + arrContainer[i].getTypeSize()+ " " + arrContainer[i].calculateWeight());
                     countAllContainer++;
+                    TotalWeightAllShips = TotalWeightAllShips + arrContainer[i].calculateWeight();
                 }
             }
         }
-        System.out.printf("Кораблей в порту %d Общее число контейнеров на всех кораблях = %d\n",
-                            countAddShip, countAllContainer );
+        System.out.printf("Кораблей в порту %d. Общее число контейнеров на всех кораблях = %d. Общая масса груза-воды = %d\n",
+                            countAddShip, countAllContainer,  TotalWeightAllShips);
+        return TotalWeightAllShips;
     }
 
     public  ShipMultiDec[] formingArrQueueShipMultiDeck(int quantityShip, int quantityDeck, int quantityContainer, int typeSizeContainer ){
@@ -106,7 +109,8 @@ public class Port {
             if(quantityDeckToShip == Const.DECK_ONE) {
 
                 Deck[] arrDeckOne = new Deck[quantityDeckToShip];
-                arrDeckOne[0] = new Deck(5);
+                //arrDeckOne[0] = new Deck(5);
+                arrDeckOne[0] = new Deck(quantityContainer);
                 arrQueueInPortShipMultiDec[i].setArrDeck(arrDeckOne.clone());
 
                 for (int j=0; j<quantityContainer; j++) {
@@ -122,8 +126,11 @@ public class Port {
             } else if (quantityDeckToShip == Const.DECK_TWO ) {
 
                 Deck[] arrDeckTwo = new Deck[quantityDeckToShip];
-                arrDeckTwo[0] = new Deck(5);
-                arrDeckTwo[1] = new Deck(4);
+                //arrDeckTwo[0] = new Deck(5);
+                //arrDeckTwo[1] = new Deck(4);
+                arrDeckTwo[0] = new Deck(quantityContainer);
+                arrDeckTwo[1] = new Deck(quantityContainer);
+
                 arrQueueInPortShipMultiDec[i].setArrDeck(arrDeckTwo.clone());
 
                 for (int j=0; j<quantityContainer; j++) {
@@ -154,8 +161,8 @@ public class Port {
     public void printAllContainerToPort() {
 
         System.out.println();
-        for (ShipMultiDec nextShip : arrShipMultiDec) {
-              nextShip.printDataContainerOnAllDeck();
+        for (int i=0; i<countAddShip; i++) {
+            arrShipMultiDec[i].printDataContainerOnAllDeck();
         }
     }
 

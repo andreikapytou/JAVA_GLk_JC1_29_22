@@ -66,7 +66,6 @@ public class ShipMultiDec {
 
     public void delContainerToDeckByNumber(int numDeck) {
 
-        System.out.println(" !!!! Палуб на корабле " + getTypeSizeDeckShip() );
         if ( numDeck >0 && numDeck <= getTypeSizeDeckShip()) {
             arrDeck[numDeck-1].delContainer();
         } else {

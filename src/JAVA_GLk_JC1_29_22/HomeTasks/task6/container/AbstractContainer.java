@@ -39,7 +39,7 @@ public abstract class AbstractContainer {
         if(typeSize == Const.TYPE_SIZE_LITTLE_CONTAINER) {
             return Const.DIAGONAL_LITTLE;
         } else if (typeSize == Const.TYPE_SIZE_BIG_CONTAINER) {
-            return Const.DIAGONAL_LITTLE;
+            return Const.DIAGONAL_BIG;
         } else {
             System.out.println("Задан Неизвестный размер контейнера.");
             return -1;

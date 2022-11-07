@@ -154,8 +154,11 @@ public class Deck {
 
     private void printArrContainers() {
         for (int i=0; i< countAddContainers; i++) {
-            System.out.printf("[%d]:Контейнер №%d -> %s Тип геометрии -> %s.\n",
-                    i, i+1,typeSizeContainer(arrContainers[i]), arrContainers[i].getTypeGeometry());
+            System.out.printf("[%d]:Контейнер №%d -> %s Тип геометрии -> %s. Диагональ=%d. Высота=%d. Плотнось=%d. Объем=%d. Масс=%d\n",
+                    i, i+1,typeSizeContainer(arrContainers[i]), arrContainers[i].getTypeGeometry(),
+                    arrContainers[i].calculationSizeDiagonal(), arrContainers[i].getHeight(),
+                    arrContainers[i].getDensityWater(),
+                    arrContainers[i].calculateVolume(), arrContainers[i].calculateWeight() );
         }
     }
 
