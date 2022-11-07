@@ -42,6 +42,11 @@ public class Port {
         if( countAddShip <  arrShipMultiDec.length  ) {
             this.arrShipMultiDec[countAddShip] = nextShip;
             this.countAddShip++;
+        } else {
+            System.out.print("Новый корабль не может быть добавлен. ");
+            System.out.println("Порт заполнен. Максимальное колличество кораблей = " + numMaxShip +"."+
+                                " Текущее колличесво кораблей  = " + countAddShip +".");
+
         }
     }
 
@@ -87,6 +92,8 @@ public class Port {
     }
 
     public  ShipMultiDec[] formingArrQueueShipMultiDeck(int quantityShip, int quantityDeck, int quantityContainer, int typeSizeContainer ){
+
+        System.out.println("\n++++++++++++++++++ СТАРТ formingArrQueueShipMultiDeck() +++++++ \n ");
 
         String[] arrNamesShip = {"Корабль1", "Корабль2", "Корабль3", "Корабль4", "Корабль5"};
         ShipMultiDec[] arrQueueInPortShipMultiDec = new ShipMultiDec[quantityShip];
@@ -140,6 +147,7 @@ public class Port {
                 System.out.println("!!!!! Неизвестный номер Палубы");
             }
         }
+        System.out.println("\n++++++++++++++++++ ФИНИШ formingArrQueueShipMultiDeck() +++++++ \n ");
         return arrQueueInPortShipMultiDec;
     }
 
