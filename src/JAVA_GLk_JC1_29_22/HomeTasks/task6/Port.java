@@ -9,7 +9,6 @@ public class Port {
     private int countAddShip;
     private ShipMultiDec[] arrShipMultiDec;
 
-
     public Port(int numMaxShip) {
 
         if (numMaxShip > 0) {
@@ -50,14 +49,15 @@ public class Port {
             System.out.print("Порт - пуст.");
         }
     }
+
     public void delShipMultiDecByName(String nameSelShip) {
 
         if (countAddShip > 0) {
-            int j=0;
+            int j = 0;
             ShipMultiDec[] arrBufShipMultiDec = new ShipMultiDec[countAddShip];
-            for(int i=0; i<countAddShip; i++){
-                if (nameSelShip.equals(arrShipMultiDec[i].getName())){
-                    System.out.printf("Корабль №%d -> %s - удален из порта.\n", i+1, this.arrShipMultiDec[i].getName());
+            for (int i = 0; i < countAddShip; i++) {
+                if (nameSelShip.equals(arrShipMultiDec[i].getName())) {
+                    System.out.printf("Корабль №%d -> %s - удален из порта.\n", i + 1, this.arrShipMultiDec[i].getName());
                 } else {
                     arrBufShipMultiDec[j] = arrShipMultiDec[i].myClone();
                     j++;
@@ -65,7 +65,7 @@ public class Port {
             }
 
             countAddShip = j;
-            for (int p=0; p < countAddShip; p++) {
+            for (int p = 0; p < countAddShip; p++) {
                 arrShipMultiDec[p] = arrBufShipMultiDec[p];
             }
 
@@ -270,13 +270,5 @@ public class Port {
         } else {
             return new ConeContainer(typeSize, height, densityWater);
         }
-    }
-
-    public int getNumMaxShip() {
-        return numMaxShip;
-    }
-
-    public ShipMultiDec[] getArrShipMultiDec() {
-        return arrShipMultiDec;
     }
 }

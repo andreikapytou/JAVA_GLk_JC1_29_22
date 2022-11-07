@@ -14,8 +14,7 @@ public abstract class AbstractContainer {
 
     public int calculateWeight() {
 
-        //return calculateVolume()*densityWater;
-        return 1;
+        return calculateVolume()*densityWater;
     }
 
     public AbstractContainer(int typeSize, int densityWater) {

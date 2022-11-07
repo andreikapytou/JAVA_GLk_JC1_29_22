@@ -8,7 +8,6 @@ public class Deck {
     private int countAddLittleContainers = 0;
     private int countAddBigContainers = 0;
     private int numMaxContainers;
-    //private AbstractContainer[] arrContainers = new AbstractContainer[Const.LITTLE_MAX_NO_BIG];
     private AbstractContainer[] arrContainers;
 
     public Deck(int numMaxContainers) {
@@ -184,6 +183,4 @@ public class Deck {
     public AbstractContainer[] getArrContainers() {
         return arrContainers;
     }
-
-
 }

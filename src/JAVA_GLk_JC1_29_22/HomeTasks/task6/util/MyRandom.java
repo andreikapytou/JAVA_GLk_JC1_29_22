@@ -3,8 +3,8 @@ package JAVA_GLk_JC1_29_22.HomeTasks.task6.util;
 /**
  * Класс MyRandom.
  *
+ * @author Andrei Kapytou (Андрей Копытов)
  * @version 1.0
- * @author  Andrei Kapytou (Андрей Копытов)
  */
 public class MyRandom {
 
@@ -16,33 +16,35 @@ public class MyRandom {
 
     /**
      * Диапазон значений от minValueRange до maxValueRange.
+     *
      * @param minValueRange начало диапазона.
      * @param maxValueRange конец диапазона.
      * @return Случайное-рандомное число типа int из заданного диапазона занчений.
      */
-    public static int nextRandomIntValueRange(int minValueRange, int maxValueRange ) {
+    public static int nextRandomIntValueRange(int minValueRange, int maxValueRange) {
 
-        return (int)( Math.random() * ( (maxValueRange - minValueRange) + 1)) + minValueRange; // ((max - min) + 1) + min
+        return (int) (Math.random() * ((maxValueRange - minValueRange) + 1)) + minValueRange; // ((max - min) + 1) + min
     }
 
     /**
-     *  Диапазон значений от 0 до maxValueRange.
+     * Диапазон значений от 0 до maxValueRange.
+     *
      * @param maxValueRange конец диапазона.
      * @return Случайное-рандомное число типа int из заданного диапазона занчений.
      */
-    public static int nextRandomIntValueRange( int maxValueRange ) {
+    public static int nextRandomIntValueRange(int maxValueRange) {
 
-        return (int)( Math.random() * (maxValueRange + 1)) ; // (max + 1)
+        return (int) (Math.random() * (maxValueRange + 1)); // (max + 1)
     }
 
-    public static double nextRandomDoubleValueRange( int valueRange ) {
+    public static double nextRandomDoubleValueRange(int valueRange) {
 
-        return  Math.random() + valueRange;
+        return Math.random() + valueRange;
     }
 
     public static char nextRandomChar(String sourceRandomString) {
 
         char[] arrChar = sourceRandomString.toCharArray();
-        return arrChar[ MyRandom.nextRandomIntValueRange(arrChar.length-1) ];
+        return arrChar[MyRandom.nextRandomIntValueRange(arrChar.length - 1)];
     }
 }

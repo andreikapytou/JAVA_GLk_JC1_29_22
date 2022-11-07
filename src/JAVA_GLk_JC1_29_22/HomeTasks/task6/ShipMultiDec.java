@@ -24,8 +24,7 @@ public class ShipMultiDec {
         }
     }
 
-    public ShipMultiDec myClone()
-    {
+    public ShipMultiDec myClone() {
         ShipMultiDec cloneDeck = new ShipMultiDec(this.name, this.numMaxDeck);
         cloneDeck.name = this.name;
         cloneDeck.numMaxDeck = this.numMaxDeck;
@@ -33,14 +32,14 @@ public class ShipMultiDec {
 
         return cloneDeck;
     }
-    
+
     public int getTypeSizeDeckShip() {
         return numMaxDeck;
     }
 
     public void addArrContainersToDeckByNumber(int numDeck, AbstractContainer[] arrContainers) {
-        if ( numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
-            arrDeck[numDeck-1].addArrContainers(arrContainers);
+        if (numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
+            arrDeck[numDeck - 1].addArrContainers(arrContainers);
         } else {
             printUnknownNumDeck(numDeck);
         }
@@ -48,8 +47,8 @@ public class ShipMultiDec {
 
     public void addContainerToDeckByNumber(int numDeck, AbstractContainer container) {
 
-        if ( numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
-            arrDeck[numDeck-1].addContainer(container);
+        if (numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
+            arrDeck[numDeck - 1].addContainer(container);
         } else {
             printUnknownNumDeck(numDeck);
         }
@@ -57,8 +56,8 @@ public class ShipMultiDec {
 
     public void delAllContainersInDeckByNumber(int numDeck) {
 
-        if ( numDeck >0 && numDeck <= getTypeSizeDeckShip()) {
-            arrDeck[numDeck-1].delAllContainersInDeck();
+        if (numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
+            arrDeck[numDeck - 1].delAllContainersInDeck();
         } else {
             printUnknownNumDeck(numDeck);
         }
@@ -66,8 +65,8 @@ public class ShipMultiDec {
 
     public void delContainerToDeckByNumber(int numDeck) {
 
-        if ( numDeck >0 && numDeck <= getTypeSizeDeckShip()) {
-            arrDeck[numDeck-1].delContainer();
+        if (numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
+            arrDeck[numDeck - 1].delContainer();
         } else {
             printUnknownNumDeck(numDeck);
         }
@@ -75,9 +74,9 @@ public class ShipMultiDec {
 
     public void printDataContainerToDeckByNumber(int numDeck) {
 
-        if ( numDeck >0 && numDeck <= getTypeSizeDeckShip()) {
+        if (numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
             System.out.printf("Палуба № %d. ", numDeck);
-            arrDeck[numDeck-1].printCurrentArrContainers();
+            arrDeck[numDeck - 1].printCurrentArrContainers();
         } else {
             printUnknownNumDeck(numDeck);
         }
@@ -87,8 +86,8 @@ public class ShipMultiDec {
 
         System.out.printf("****** Имя Корабля = %s. Число палуб на корабле = %d. ***********************************\n",
                 name, getTypeSizeDeckShip());
-        for (int i=0; i<arrDeck.length; i++) {
-            System.out.printf("Палуба № %d. ", i+1);
+        for (int i = 0; i < arrDeck.length; i++) {
+            System.out.printf("Палуба № %d. ", i + 1);
             arrDeck[i].printCurrentArrContainers();
         }
     }
@@ -100,17 +99,17 @@ public class ShipMultiDec {
 
     public Deck getDeckByNumber(int numDeck) {
 
-        if ( numDeck >0 && numDeck <= getTypeSizeDeckShip()) {
-            return arrDeck[numDeck-1];
-        }else {
+        if (numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
+            return arrDeck[numDeck - 1];
+        } else {
             printUnknownNumDeck(numDeck);
             return new Deck(1);
         }
     }
-  
+
     public void setDeckByNumber(int numDeck, Deck deck) {
-        if ( numDeck >0 && numDeck <= getTypeSizeDeckShip()) {
-             this.arrDeck[numDeck-1] = deck;
+        if (numDeck > 0 && numDeck <= getTypeSizeDeckShip()) {
+            this.arrDeck[numDeck - 1] = deck;
         }
     }
 
@@ -133,7 +132,7 @@ public class ShipMultiDec {
                 this.arrDeck[i] = arrDeck[i];
             } else {
                 System.out.printf("Палуба № %d не может быть добавлена на корабль. На корабле %s колличесво палуб = %d\n",
-                        i+1, this.name, getTypeSizeDeckShip());
+                        i + 1, this.name, getTypeSizeDeckShip());
                 break;
             }
         }
