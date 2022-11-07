@@ -85,7 +85,8 @@ public class ShipMultiDec {
 
     public void printDataContainerOnAllDeck() {
 
-        System.out.printf("Имя Корабля = %s. Число палуб на корабле = %d.\n", name, getTypeSizeDeckShip());
+        System.out.printf("****** Имя Корабля = %s. Число палуб на корабле = %d. ***********************************\n",
+                name, getTypeSizeDeckShip());
         for (int i=0; i<arrDeck.length; i++) {
             System.out.printf("Палуба № %d. ", i+1);
             arrDeck[i].printCurrentArrContainers();

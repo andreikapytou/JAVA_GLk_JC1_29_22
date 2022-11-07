@@ -50,6 +50,29 @@ public class Port {
             System.out.print("Порт - пуст.");
         }
     }
+    public void delShipMultiDecByName(String nameSelShip) {
+
+        if (countAddShip > 0) {
+            int j=0;
+            ShipMultiDec[] arrBufShipMultiDec = new ShipMultiDec[countAddShip];
+            for(int i=0; i<countAddShip; i++){
+                if (nameSelShip.equals(arrShipMultiDec[i].getName())){
+                    System.out.printf("Корабль №%d -> %s - удален из порта.\n", i+1, this.arrShipMultiDec[i].getName());
+                } else {
+                    arrBufShipMultiDec[j] = arrShipMultiDec[i].myClone();
+                    j++;
+                }
+            }
+
+            countAddShip = j;
+            for (int p=0; p < countAddShip; p++) {
+                arrShipMultiDec[p] = arrBufShipMultiDec[p];
+            }
+
+        } else {
+            System.out.print("Порт - пуст.");
+        }
+    }
 
     public void delContainerToDeckByNumberInShip(int numShip, int numDeck) {
 
@@ -108,8 +131,8 @@ public class Port {
                 arrQueueInPortShipMultiDec[i].setArrDeck(arrDeckOne.clone());
 
                 for (int j = 0; j < quantityContainer; j++) {
-                    AbstractContainer nextContainer = createRandomContainer(typeSizeContainer, getValueRandomHeight(),
-                            getValueRandomDensityWater());
+                    AbstractContainer nextContainer = createRandomContainer(typeSizeContainer, returnValueRandomHeight(),
+                            returnValueRandomDensityWater());
                     arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip, nextContainer);
                 }
 
@@ -122,11 +145,11 @@ public class Port {
 
                 for (int j = 0; j < quantityContainer; j++) {
 
-                    AbstractContainer nextContainer1 = createRandomContainer(typeSizeContainer, getValueRandomHeight(),
-                            getValueRandomDensityWater());
+                    AbstractContainer nextContainer1 = createRandomContainer(typeSizeContainer, returnValueRandomHeight(),
+                            returnValueRandomDensityWater());
                     arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip - 1, nextContainer1);
-                    AbstractContainer nextContainer2 = createRandomContainer(typeSizeContainer, getValueRandomHeight(),
-                            getValueRandomDensityWater());
+                    AbstractContainer nextContainer2 = createRandomContainer(typeSizeContainer, returnValueRandomHeight(),
+                            returnValueRandomDensityWater());
                     arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip, nextContainer2);
                 }
 
@@ -134,7 +157,7 @@ public class Port {
                 System.out.println("Неизвестный номер Палубы. formingArrQueueShipMultiDeck(4-е пареметра)");
             }
         }
-       return arrQueueInPortShipMultiDec;
+        return arrQueueInPortShipMultiDec;
     }
 
     public ShipMultiDec[] formingArrQueueShipMultiDeck(int quantityShip) {
@@ -142,26 +165,26 @@ public class Port {
         ShipMultiDec[] arrQueueInPortShipMultiDec = new ShipMultiDec[quantityShip];
 
         for (int i = 0; i < arrQueueInPortShipMultiDec.length; i++) {
-            arrQueueInPortShipMultiDec[i] = new ShipMultiDec(Const.ARR_NAME_SHIP[i], getValueRandomQuantityDeckToShip());
+            arrQueueInPortShipMultiDec[i] = new ShipMultiDec(Const.ARR_NAME_SHIP[i], returnValueRandomQuantityDeckToShip());
 
             int quantityDeckToShip = arrQueueInPortShipMultiDec[i].getTypeSizeDeckShip();
             if (quantityDeckToShip == Const.DECK_ONE) {
 
-                int quantityContainer = getValueRandomQuantityContainerInDeck();
+                int quantityContainer = returnValueRandomQuantityContainerInDeck();
                 Deck[] arrDeckOne = new Deck[quantityDeckToShip];
                 arrDeckOne[0] = new Deck(quantityContainer);
                 arrQueueInPortShipMultiDec[i].setArrDeck(arrDeckOne.clone());
 
                 for (int j = 0; j < quantityContainer; j++) {
 
-                    AbstractContainer nextContainer = createRandomContainer(getValueRandomTypeSizeContainer(),
-                            getValueRandomHeight(), getValueRandomDensityWater());
+                    AbstractContainer nextContainer = createRandomContainer(returnValueRandomTypeSizeContainer(),
+                            returnValueRandomHeight(), returnValueRandomDensityWater());
                     arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip, nextContainer);
                 }
 
             } else if (quantityDeckToShip == Const.DECK_TWO) {
 
-                int quantityContainer = getValueRandomQuantityContainerInDeck();
+                int quantityContainer = returnValueRandomQuantityContainerInDeck();
                 Deck[] arrDeckTwo = new Deck[quantityDeckToShip];
                 arrDeckTwo[0] = new Deck(quantityContainer);
                 arrDeckTwo[1] = new Deck(quantityContainer);
@@ -169,11 +192,11 @@ public class Port {
 
                 for (int j = 0; j < quantityContainer; j++) {
 
-                    AbstractContainer nextContainer1 = createRandomContainer(getValueRandomTypeSizeContainer(),
-                            getValueRandomHeight(), getValueRandomDensityWater());
+                    AbstractContainer nextContainer1 = createRandomContainer(returnValueRandomTypeSizeContainer(),
+                            returnValueRandomHeight(), returnValueRandomDensityWater());
                     arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip - 1, nextContainer1);
-                    AbstractContainer nextContainer2 = createRandomContainer(getValueRandomTypeSizeContainer(),
-                            getValueRandomHeight(), getValueRandomDensityWater());
+                    AbstractContainer nextContainer2 = createRandomContainer(returnValueRandomTypeSizeContainer(),
+                            returnValueRandomHeight(), returnValueRandomDensityWater());
                     arrQueueInPortShipMultiDec[i].addContainerToDeckByNumber(quantityDeckToShip, nextContainer2);
                 }
             } else {
@@ -190,7 +213,7 @@ public class Port {
         }
     }
 
-    private int getValueRandomTypeSizeContainer() {
+    private int returnValueRandomTypeSizeContainer() {
 
         int num = MyRandom.nextRandomIntValueRange(5);
         if (num == 0 || num == 2) {
@@ -199,7 +222,7 @@ public class Port {
         return Const.TYPE_SIZE_BIG_CONTAINER;
     }
 
-    private int getValueRandomQuantityDeckToShip() {
+    private int returnValueRandomQuantityDeckToShip() {
 
         int num = MyRandom.nextRandomIntValueRange(5);
         if (num == 0 || num == 2) {
@@ -208,7 +231,7 @@ public class Port {
         return Const.DECK_TWO;
     }
 
-    private int getValueRandomQuantityContainerInDeck() {
+    private int returnValueRandomQuantityContainerInDeck() {
 
         int num = MyRandom.nextRandomIntValueRange(5);
         if (num == 0 || num == 2) {
@@ -217,7 +240,7 @@ public class Port {
         return Const.BIG_MAX_NO_LITTLE;
     }
 
-    private int getValueRandomDensityWater() {
+    private int returnValueRandomDensityWater() {
 
         int num = MyRandom.nextRandomIntValueRange(5);
         if (num == 0 || num == 2) {
@@ -226,16 +249,15 @@ public class Port {
         return Const.DENSITY_WATER2;
     }
 
-
-    private int getValueRandomHeight() {
+    private int returnValueRandomHeight() {
         return MyRandom.nextRandomIntValueRange(Const.HEIGHT_MIN, Const.HEIGHT_MAX);
     }
 
     private void changeDataContainer(AbstractContainer container) {
 
-        container.setTypeSize(getValueRandomTypeSizeContainer());
-        container.setHeight(getValueRandomHeight());
-        container.setDensityWater(getValueRandomDensityWater());
+        container.setTypeSize(returnValueRandomTypeSizeContainer());
+        container.setHeight(returnValueRandomHeight());
+        container.setDensityWater(returnValueRandomDensityWater());
     }
 
     private AbstractContainer createRandomContainer(int typeSize, int height, int densityWater) {
