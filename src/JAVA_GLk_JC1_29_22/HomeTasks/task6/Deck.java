@@ -61,20 +61,20 @@ public class Deck {
         }
     }
 
-    public void addContainer(AbstractContainer container) {
+    public void addContainer(AbstractContainer nextContainer) {
 
-        if (isAddContainer(container)) {
-            arrContainers[countAddContainers] = container;
+        if (isAddContainer(nextContainer)) {
+            arrContainers[countAddContainers] = nextContainer;
             countAddContainers++;
 
-            if (isLittleContainer(container)) {
+            if (isLittleContainer(nextContainer)) {
                 countAddLittleContainers++;
             }
-            if (isBigContainer(container)) {
+            if (isBigContainer(nextContainer)) {
                 countAddBigContainers++;
             }
         } else {
-            printNoAddContainer(container);
+            printNoAddContainer(nextContainer);
         }
     }
 
@@ -182,7 +182,5 @@ public class Deck {
         return arrContainers;
     }
 
-    public void setArrContainers(AbstractContainer[] arrContainers) {
-        this.arrContainers = arrContainers;
-    }
+
 }

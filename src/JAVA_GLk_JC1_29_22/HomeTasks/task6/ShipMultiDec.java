@@ -127,6 +127,16 @@ public class ShipMultiDec {
     }
 
     public void setArrDeck(Deck[] arrDeck) {
-        this.arrDeck = arrDeck;
+
+        for (int i = 0; i < arrDeck.length; i++) {
+            if (i < getTypeSizeDeckShip()) {
+                this.arrDeck[i] = arrDeck[i];
+            } else {
+                System.out.printf("Палуба № %d не может быть добавлена на корабль. На корабле %s колличесво палуб = %d\n",
+                        i+1, this.name, getTypeSizeDeckShip());
+                break;
+            }
+        }
     }
+
 }
