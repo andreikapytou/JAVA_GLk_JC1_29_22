@@ -1,5 +1,7 @@
 package JAVA_GLk_JC1_29_22.HomeTasks.Task5.Util;
 
+import java.lang .Math;
+
 /**
  * Класс MyRandomRound.
  *

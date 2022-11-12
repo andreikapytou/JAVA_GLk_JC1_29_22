@@ -1,5 +1,7 @@
 package JAVA_GLk_JC1_29_22.HomeTasks.Task5.Util;
 
+import java.util.Arrays;
+
 public class PrintData {
 
     private static final int LEFT_FROM_STR = 1;
@@ -12,19 +14,12 @@ public class PrintData {
 
     }
 
-    private static void initializeArrChar(char[] arrChar, char initValue) {
-
-        for(int i=0; i<arrChar.length; i++) {
-            arrChar[i] = initValue;
-        }
-    }
-
     // Вставка заданного колличества символов перед-вначало или после-вконец строки
     private static String addChars(String sourceStr, char pasteChar, int qtyChar, int modePaste) {
 
         StringBuilder sb = new StringBuilder();
         char[] arrChar = new char[qtyChar];
-        initializeArrChar(arrChar, pasteChar);
+        Arrays.fill(arrChar, pasteChar);
         if (modePaste == LEFT_FROM_STR) {
             sb.append(arrChar).append(sourceStr);
         } else if(modePaste == RIGHT_FROM_STR){
@@ -54,7 +49,7 @@ public class PrintData {
         return arrMaxLenColumn;
     }
 
-    private static void printNumColumn(String[][] matrix) {
+    private static int[] printNumColumn(String[][] matrix) {
 
         int[] arrMaxLenColumn = findMaxLenColumnInMatrix(matrix);
         System.out.print("\n  ");
@@ -62,17 +57,29 @@ public class PrintData {
             System.out.print( addChars(" "+j, ' ', arrMaxLenColumn[j], RIGHT_FROM_STR) ); //Вывод номера столбца
         }
         System.out.println();
+        return arrMaxLenColumn;
+    }
+
+    private static void printOneCell(String printValue, int maxLenColumn ) {
+
+        if (printValue.length() <= maxLenColumn) {
+            int countSpace = maxLenColumn - printValue.length();
+            String strOutCell = (addChars(" " + printValue + " ", ' ', countSpace, RIGHT_FROM_STR));
+            System.out.print(strOutCell); //Вывод элемента
+        } else {
+            System.out.print(printValue);
+        }
     }
 
     public static void printMatrix(String[][] matrix) {
 
-        printNumColumn(matrix);
+        int[] arrMaxLenColumn = printNumColumn(matrix);
         for (int i = 0; i < matrix.length; i++)  /* По строкам */
         {
             System.out.print( i + " "); //Вывод номера троки
             for (int j = 0; j < matrix[i].length; j++)  /* По столбцам */
             {
-                System.out.print(" " + matrix[i][j] + " "); //Вывод элемента
+                 printOneCell(matrix[i][j], arrMaxLenColumn[j]);
             }
             System.out.println(); // Перенос - табличная формы
         }

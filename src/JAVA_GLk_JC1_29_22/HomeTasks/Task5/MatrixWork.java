@@ -1,6 +1,6 @@
 package JAVA_GLk_JC1_29_22.HomeTasks.Task5;
 
-
+import java.util.Arrays;
 import JAVA_GLk_JC1_29_22.HomeTasks.Task5.Util.*;
 
 /**
@@ -13,7 +13,7 @@ public class MatrixWork {
 
     private static final int SIZE_MATRIX = 10;
     private static final int SIZE_VALUE_CELL = 7;
-    private static final String ALPHABET_ENGLISH =  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String ALPHABET_ENGLISH =  "AaBbCcDdEeFfGgHhIiJjKkLlMmNnJoPpQqRrSsTtUuVvWwXxYyZz";
     private static final String CHAR_VALUE_FOR_FIND =  ".0123456789";
 
     private static final int BEGIN_EXTRACTION = 2;
@@ -36,13 +36,15 @@ public class MatrixWork {
                 System.out.println();
                 PrintData.printArrDiagonal("Главная диогональ  :", arrMajorDiagonal, PrintData.FLAG_MAJOR_DIAGONAL);
                 PrintData.printArrDiagonal("Побочная диогональ :", arrSideDiagonal, PrintData.FLAG_SIDE_DIAGONAL);
-                PrintData.printResultCompareDiagonal( isCompareDiagonal(arrMajorDiagonal, arrSideDiagonal) );
+                //PrintData.printResultCompareDiagonal( isCompareDiagonal(arrMajorDiagonal, arrSideDiagonal) );
+                PrintData.printResultCompareDiagonal( Arrays.equals(arrMajorDiagonal, arrSideDiagonal) );
                 PrintData.printMajorAndSideDiagonal(arrMajorAndSide, arrMajorDiagonal.length);
                 FindData.findDoubleOrStringInArrString(arrMajorAndSide, CHAR_VALUE_FOR_FIND, BEGIN_EXTRACTION, END_EXTRACTION  );
                 PrintData.printMatrix(originalStringMatrix);
         } else if ( modeWork == 2 ) {
                 System.out.println();
-                PrintData.printResultCompareDiagonal( isCompareDiagonal(arrMajorDiagonal, arrSideDiagonal) );
+                //PrintData.printResultCompareDiagonal( isCompareDiagonal(arrMajorDiagonal, arrSideDiagonal) );
+                PrintData.printResultCompareDiagonal( Arrays.equals(arrMajorDiagonal, arrSideDiagonal) );
                 FindData.findDoubleOrStringInArrString(arrMajorAndSide, CHAR_VALUE_FOR_FIND, BEGIN_EXTRACTION, END_EXTRACTION  );
                 PrintData.printMatrix(originalStringMatrix);
         } else {
