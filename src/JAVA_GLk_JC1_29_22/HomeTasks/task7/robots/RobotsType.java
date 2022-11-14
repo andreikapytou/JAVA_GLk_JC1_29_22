@@ -1,4 +1,4 @@
-package JAVA_GLk_JC1_29_22.HomeTasks.task8.robots;
+package JAVA_GLk_JC1_29_22.HomeTasks.task7.robots;
 
 public enum RobotsType {
 

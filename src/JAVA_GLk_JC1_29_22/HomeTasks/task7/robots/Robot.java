@@ -1,8 +1,8 @@
-package JAVA_GLk_JC1_29_22.HomeTasks.task8.robots;
+package JAVA_GLk_JC1_29_22.HomeTasks.task7.robots;
 
-import JAVA_GLk_JC1_29_22.HomeTasks.task8.bodies.Body;
-import JAVA_GLk_JC1_29_22.HomeTasks.task8.heads.Head;
-import JAVA_GLk_JC1_29_22.HomeTasks.task8.factory.FactoryType;
+import JAVA_GLk_JC1_29_22.HomeTasks.task7.bodies.Body;
+import JAVA_GLk_JC1_29_22.HomeTasks.task7.heads.Head;
+import JAVA_GLk_JC1_29_22.HomeTasks.task7.factory.FactoryType;
 
 public abstract class Robot {
 

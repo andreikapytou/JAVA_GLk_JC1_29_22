@@ -1,6 +1,6 @@
-package JAVA_GLk_JC1_29_22.HomeTasks.task8;
+package JAVA_GLk_JC1_29_22.HomeTasks.task7;
 
-import JAVA_GLk_JC1_29_22.HomeTasks.task8.factory.*;
+import JAVA_GLk_JC1_29_22.HomeTasks.task7.factory.*;
 
 public class Corporation {
 

@@ -1,4 +1,4 @@
-package JAVA_GLk_JC1_29_22.HomeTasks.task8;
+package JAVA_GLk_JC1_29_22.HomeTasks.task7;
 
 public class Cons {
     public static final String[] NAMES_ROBOTS1 = {"Имя1", "Имя2", "Имя3", "Имя4", "Имя5", "Имя6", "Имя7", "Имя8", "Имя9"};

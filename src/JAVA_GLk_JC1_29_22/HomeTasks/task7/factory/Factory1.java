@@ -1,8 +1,8 @@
-package JAVA_GLk_JC1_29_22.HomeTasks.task8.factory;
+package JAVA_GLk_JC1_29_22.HomeTasks.task7.factory;
 
-import JAVA_GLk_JC1_29_22.HomeTasks.task8.bodies.*;
-import JAVA_GLk_JC1_29_22.HomeTasks.task8.heads.Head;
-import JAVA_GLk_JC1_29_22.HomeTasks.task8.robots.*;
+import JAVA_GLk_JC1_29_22.HomeTasks.task7.bodies.*;
+import JAVA_GLk_JC1_29_22.HomeTasks.task7.heads.Head;
+import JAVA_GLk_JC1_29_22.HomeTasks.task7.robots.*;
 
 public class Factory1 extends Factory implements BodyProd {
 
