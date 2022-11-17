@@ -2,19 +2,15 @@ package JAVA_GLk_JC1_29_22.HomeTasks.task8;
 
 import java.util.Collection;
 
-public interface MyList <T> {
+public interface MyList<T> {
 
-    // Количество элементов в коллекции-списке.
     int size();
 
-    // Проверяет на наличие элементов в коллекции-списке.
     boolean isEmpty();
 
-    // Проверяет содержится ли элемент в коллекции-списке.
     boolean contains(Object value);
 
-    // Возвращает индекс первого вхождения объекта value в список. Если объект не найден вернуть -1;
-    int indexOf (Object value);
+    int indexOf(Object value);
 
     boolean add(T value);
 
@@ -28,13 +24,13 @@ public interface MyList <T> {
 
     boolean remove(Object value);
 
-    T remove (int index);
+    T remove(int index);
 
-    // Возвращает объект из списка по индексу index
     T get(int index);
 
     Object[] toArray();
 
     void printMyList();
 
+    int getCurrentCapacity();
 }

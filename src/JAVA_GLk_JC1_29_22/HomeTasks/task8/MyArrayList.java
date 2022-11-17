@@ -5,30 +5,32 @@ import java.util.Collection;
 public class MyArrayList<T> implements MyList<T> {
 
     private static final int ELEMENTARY_CAPACITY = 15;
-   
     private int currentSize;
     private int currentCapacity;
+    private T[] arrayObjectList;
 
-    private Object[] arrayObjectList;
-    //private T[] arrayObjectList;
-
-    // Количество элементов в коллекции-списке.
     public int size() {
         return currentSize;
     }
 
-    // Проверяет на наличие элементов в коллекции-списке.
     public boolean isEmpty() {
+
         return currentSize == 0;
     }
 
-    // Проверяет содержится ли элемент в коллекции-списке.
     public boolean contains(Object value) {
+
         return indexOf(value) >= 0;
     }
 
-    // Возвращает индекс первого вхождения объекта value в коллекцию-список. Если объект не найден вернуть -1;
     public int indexOf(Object value) {
+
+        if (!checkItemTypes(value)) {
+            return -1;
+        }
+
+        T element = (T) value;
+
         if (value == null) {
 
             for (int i = 0; i < currentSize; i++) {
@@ -40,7 +42,7 @@ public class MyArrayList<T> implements MyList<T> {
         } else {
 
             for (int i = 0; i < currentSize; i++) {
-                if (value.equals(arrayObjectList[i])) {
+                if (arrayObjectList[i].equals(element)) {
                     return i;
                 }
             }
@@ -49,6 +51,7 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     public boolean add(T value) {
+
         if (currentSize >= currentCapacity) {
             enlargeCapacity();
         }
@@ -58,30 +61,35 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     public void add(int index, T value) {
+
         if (index < 0) {
-            return;
+            System.out.println("Метод: add(int index, T value) - Введен отрицательный индекс массива");
+        } else {
+
+            if (currentSize >= currentCapacity) {
+                enlargeCapacity();
+            }
+            if (index > currentSize) {
+                index = currentSize;
+            }
+
+            for (int i = currentSize; i >= 0; i--) {
+
+                if (i >= index) {
+                    arrayObjectList[i + 1] = arrayObjectList[i];
+                }
+            }
+            arrayObjectList[index] = value;
+            currentSize++;
         }
-        if (currentSize + 1 >= currentCapacity) {
-            enlargeCapacity();
-        }
-        if (index > currentSize) {
-            index = currentSize;
-        }
-        for (int i = currentSize; i >= index; i--) {
-            arrayObjectList[i + 1] = arrayObjectList[i];
-        }
-        arrayObjectList[index] = value;
-        currentSize++;
     }
 
-    // Добавляет элементы одной коллекции в конец другой.
     public boolean addAll(Collection<? extends T> value) {
-        if (value == null) {
+
+        if ((value == null) || (value.isEmpty())) {
             return false;
         }
-        if (value.isEmpty()) {
-            return false;
-        }
+
         for (T next : value) {
             add(next);
         }
@@ -89,31 +97,30 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     public boolean addAll(MyList<? extends T> coll) {
-        if (coll == null) {
+
+        if ((coll == null) || (coll.isEmpty())) {
             return false;
         }
-        if (coll.isEmpty()) {
-            return false;
+
+        for (T nextObject : (T[]) coll.toArray()) {
+            add(nextObject);
         }
-        for (Object nextObject : coll.toArray()) {
-            add((T) nextObject);
-        }
+
         return true;
     }
 
-    // Присваивает значение объекта value элементу, который находиться по индексу index.
     public T set(int index, T value) {
         if ((index >= 0) && (index < currentSize)) {
-            Object object = arrayObjectList[index];
+            T object = arrayObjectList[index];
             arrayObjectList[index] = value;
-            return (T) object;
+            return object;
         }
         return null;
     }
 
     private void enlargeCapacity() {
         currentCapacity = currentCapacity * 2;
-        Object[] newArrayObjectList = new Object[currentCapacity];
+        T[] newArrayObjectList = (T[]) new Object[currentCapacity];
         for (int i = 0; i < currentSize; i++) {
             newArrayObjectList[i] = arrayObjectList[i];
             arrayObjectList[i] = null;
@@ -122,96 +129,111 @@ public class MyArrayList<T> implements MyList<T> {
     }
 
     public boolean remove(Object value) {
-        if (currentSize == 0) {
+
+        if ((currentSize == 0) || (!checkItemTypes(value)) || (!contains(value))) {
+            System.out.println("Метод remove(Object value): " + "В массиве отсутвует элемент = " + value);
             return false;
         }
-        int iSearch;
-        for (iSearch = 0; iSearch < currentSize; iSearch++) {
-            if (arrayObjectList[iSearch] == null && value == null) {
-                break;
-            }
-            if ((arrayObjectList[iSearch] != null) && (arrayObjectList[iSearch].equals(value))) {
-                break;
+
+        int iSearch = 0;
+        for (int i = 0; i < currentSize; i++) {
+
+            if (value == null) {
+                if (arrayObjectList[i] == null) {
+                    iSearch = i;
+                    break;
+                }
+            } else {
+                if ((arrayObjectList[i] != null) && (arrayObjectList[i].equals(value))) {
+                    iSearch = i;
+                    break;
+                }
             }
         }
+        return shiftRemoveElement(iSearch);
+    }
 
-        if (iSearch < currentSize) {
-            offsetRemove(iSearch);
+    public T remove(int index) {
+
+        T removeElement = get(index);
+        if (shiftRemoveElement(index)) {
+            return removeElement;
+        }
+        return null;
+    }
+
+    public T get(int index) {
+
+        if ((index >= 0) && (index < currentSize)) {
+            return arrayObjectList[index];
+        }
+        return null;
+    }
+
+    private boolean shiftRemoveElement(int removeIndex) {
+
+        if ((removeIndex) >= 0 && (removeIndex < currentSize)) {
+
+            for (int i = 0; i < currentSize; i++) {
+
+                if (i >= removeIndex) {
+                    arrayObjectList[i] = arrayObjectList[i + 1];
+                }
+            }
+            currentSize--;
+            arrayObjectList[currentSize] = null;
             return true;
         }
         return false;
     }
 
-    // Возвращает объект из списка по индексу index
-    public T get(int index) {
-        if ((index >= 0) && (index < currentSize)) {
-            return (T) arrayObjectList[index];
-        }
-        return null;
-    }
-
-    public T remove(int index) {
-        T object = null;
-        if ( (index >= 0) && (index < currentSize)) {
-            object = get(index);
-            offsetRemove(index);
-        }
-        return object;
-    }
-
-    private void offsetRemove(int begin) {
-        currentSize--;
-        if (currentSize <= 0) {
-            return;
-        }
-        if (currentSize != begin) {
-            System.arraycopy(arrayObjectList, begin + 1, arrayObjectList, begin, currentSize - begin);
-               /*
-                Object src, // исходный массив - из которго копируют.
-                int srcPos, // начальный индекс для копирования в исходном массиве.
-                Object dest, // итоговый массив - в который коипруют.
-                int destPos, // начальный индекс в итогоовом массиве.
-                int length // длина копируемого содержимого
-               */
-        }
-        arrayObjectList[currentSize] = null;
-    }
-
-    public Object[] toArray() {
-        Object[] newArray = new Object[currentSize];
+    public T[] toArray() {
+        T[] newArray = (T[]) new Object[currentSize];
         System.arraycopy(arrayObjectList, 0, newArray, 0, currentSize);
         return newArray;
     }
 
+    private boolean checkItemTypes(Object value) {
+
+        if (value.getClass() != arrayObjectList[0].getClass()) {
+            System.out.print("Тип объекта " + "(" + value.getClass() + ") не равен (" +
+                    arrayObjectList[0].getClass() + ") Типу объекта массива.  ");
+            return false;
+        }
+        return true;
+    }
 
     public void printMyList() {
 
         if (!isEmpty()) {
             for (int i = 0; i < currentSize; i++) {
-                System.out.println("["+i+"]"+" "+ get(i));
+                System.out.println("[" + i + "]" + " " + get(i));
             }
         } else {
             System.out.println("MyList - пуст.");
         }
     }
 
+    public int getCurrentCapacity() {
+        return currentCapacity;
+    }
+
     public MyArrayList() {
         currentCapacity = ELEMENTARY_CAPACITY;
-        arrayObjectList = new Object[currentCapacity];
+        arrayObjectList = (T[]) new Object[currentCapacity];
     }
 
     public MyArrayList(int initCapacity) {
         this.currentCapacity = initCapacity;
-        arrayObjectList = new Object[initCapacity];
+        arrayObjectList = (T[]) new Object[initCapacity];
     }
 
-    // Создаёт список, в который добавляются все элементы коллекции col
     MyArrayList(MyList<? extends T> col) {
 
         this();
         if ((col != null) && !(col.isEmpty())) {
-            for (Object nextObject : col.toArray()) {
-                add((T) nextObject);
+            for (T nextObject : (T[]) col.toArray()) {
+                add(nextObject);
             }
         } else {
             System.out.println("Ошибка параметров конструктора MyArrayList(MyList<? extends T> col)");
@@ -221,7 +243,7 @@ public class MyArrayList<T> implements MyList<T> {
     MyArrayList(Collection<? extends T> coll) {
 
         this();
-        if ((coll != null) && !(coll.isEmpty())) {
+        if ((coll != null) && (!coll.isEmpty())) {
             for (T nextColl : coll) {
                 add(nextColl);
             }
@@ -229,5 +251,4 @@ public class MyArrayList<T> implements MyList<T> {
             System.out.println("Ошибка параметров конструктора MyArrayList(Collection<? extends T> coll)");
         }
     }
-
 }
