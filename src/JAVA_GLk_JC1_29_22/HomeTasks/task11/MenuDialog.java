@@ -4,9 +4,6 @@ import java.util.Scanner;
 
 public class MenuDialog {
 
-    private static final String[] PRODUCTS_NAMES1 = {"Очки", "Плавки", "Велосипед", "Нож", "Чашка", "Лампа", "Книга"};
-    private static final String[] PRODUCTS_NAMES2 = {"Вилка", "Ботинки", "Скатерть", "Топор", "Термос", "Лопата", "Спички"};
-
     private static final String ACTION1 = "1";
     private static final String ACTION2 = "2";
     private static final String ACTION3 = "3";
@@ -34,8 +31,7 @@ public class MenuDialog {
 
     public static void startApplication() {
 
-        shop.unloadProductsInWarehouse(PRODUCTS_NAMES1);
-        shop.fixDateProductsInWarehouse();
+        shop.unloadNextProductsInWarehouse();
 
         chooseMenuAction();
     }
@@ -144,7 +140,6 @@ public class MenuDialog {
             System.out.printf("Введен №:%s - действие с данным номером отсутсвует в меню.\n", subAction);
         }
     }
-
 
     private static String inputConsole(String strWelcomeInput) {
 
