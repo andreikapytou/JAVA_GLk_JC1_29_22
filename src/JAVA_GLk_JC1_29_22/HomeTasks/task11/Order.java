@@ -38,6 +38,10 @@ public class Order {
         for(int i=0; i<products.size(); i++){
             infoFullProducts = infoFullProducts.concat("Товар №:" + (i+1) +"\n"+ products.get(i).toString()+"\n");
         }
+
+        if(infoFullProducts.equals("")){
+            infoFullProducts = "В данном закезе товары - ОТСУТСТВУЮТ.\n";
+        }
         return infoFullProducts;
     }
 
@@ -70,6 +74,18 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(idNumber, date, products);
+    }
+
+    public Integer getIdNumber() {
+        return idNumber;
+    }
+
+    public Calendar getDate() {
+        return date;
+    }
+
+    public List<Product> getProducts() {
+        return products;
     }
 
     public Order(Integer idNumber, Collection<? extends Product> prod) {

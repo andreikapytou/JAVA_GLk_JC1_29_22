@@ -4,14 +4,18 @@ import java.util.*;
 
 public class Shop {
 
-    private static final int MAX_MONTH = 11;
-
     private static final String[] PRODUCTS_NAMES1 = {"Очки", "Плавки", "Велосипед", "Нож", "Чашка", "Лампа", "Книга",
             "Дрель", "Отвертка", "Колесо", "Проволока", "Поднос", "Ведро", "Веревка"};
     private static final String[] PRODUCTS_NAMES2 = {"Вилка", "Ботинки", "Скатерть", "Топор", "Термос", "Лопата", "Спички"};
 
+    private static final String[] PRODUCTS_NAMES3 = {"Веревка", "Свечка", "Штопор", "Палатка"};
+
+    private static final String[][] arrProductNames = {PRODUCTS_NAMES1, PRODUCTS_NAMES2, PRODUCTS_NAMES3};
+
     private int countUnload;
-    private int iteratorMonth;
+    private int fixIdOrder = 1;
+
+    private int countOrders;
 
     private List<Product> productsInWarehouse = new ArrayList<>();
     private List<Product> productsInBasket = new ArrayList<>();
@@ -24,61 +28,37 @@ public class Shop {
 
     public void unloadNextProductsInWarehouse() {
 
-        if (countUnload == 0) {
-            unloadProductsInWarehouse(PRODUCTS_NAMES1);
-        } else if (countUnload == 1) {
-            unloadProductsInWarehouse(PRODUCTS_NAMES2);
+        if (countUnload < arrProductNames.length) {
+            unloadProductsInWarehouse(arrProductNames[countUnload++]);
+        } else {
+            System.out.println("\nТовары для отгрузки на склад - отсутствуют!\n");
+            countUnload = 0;
         }
-
-        countUnload++;
     }
 
     private void unloadProductsInWarehouse(String[] productsNames) {
 
+        MyData myData = new MyData();
+
         for (int i = 0; i < productsNames.length; i++) {
 
-            Calendar dataProduct = new GregorianCalendar();
-            int nextMonth = formValueIteratorMonth();
-            fixNewYearMountDay(dataProduct, 1999 + i, nextMonth, 1);
-            //      fixNewHourMinuteSecond(dataProduct, 0, 0, 0);
-
+            Calendar dataProduct = myData.fixDataProduct();
             productsInWarehouse.add(new Product(i + 1, productsNames[i], dataProduct));
         }
     }
 
-    private int formValueIteratorMonth() {
-
-        if (iteratorMonth > MAX_MONTH) {
-            iteratorMonth = 0;
-        }
-        return iteratorMonth++;
-    }
-
     private void fixDateProductsInWarehouse() {
+
+        MyData myData = new MyData();
 
         for (int i = 0; i < productsInWarehouse.size() - 1; i++) {
 
             Product product = productsInWarehouse.get(i);
             Calendar lastDate = product.getDateOfManufacture();
-            fixNewYearMountDay(lastDate, 2000 + i, 1 + i, 1 + i);
-            fixNewHourMinuteSecond(lastDate, 8 + i, 1 + i, 20 + i);
+            myData.fixDataProduct(lastDate);
             product.setDateOfManufacture(lastDate);
             productsInWarehouse.set(i, product);
         }
-    }
-
-    private void fixNewYearMountDay(Calendar calendar, int year, int month, int day) {
-
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
-    }
-
-    private void fixNewHourMinuteSecond(Calendar calendar, int hour, int minute, int second) {
-
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute);
-        calendar.set(Calendar.SECOND, second);
     }
 
     public String getStringInfoListProducts(String source, boolean fullInfo, List<Product> listProducts) {
@@ -132,6 +112,48 @@ public class Shop {
 
     }
 
+    public Product getProductInWarehouse(int index){
+
+        return productsInWarehouse.get(index);
+    }
+
+    public Product removeProductInWarehouse(int index){
+
+        return productsInWarehouse.remove(index);
+    }
+
+    public void addProductCurrentOrderFromWarehouse(int index){
+        if(countOrders > 0) {
+            listOrders.get(countOrders-1).addProduct(productsInWarehouse.get(index));
+        }
+    }
+
+    public void addOrder(){
+        listOrders.add(new Order(fixIdOrder++));
+        countOrders++;
+    }
+
+    public void removeOrder(int index){
+        listOrders.remove(index);
+        countOrders--;
+    }
+
+    public void addProductInBasketFromWarehouse(int index){
+
+        productsInBasket.add(productsInWarehouse.get(index));
+    }
+
+    public void removeProductInBasket(int index){
+
+        if ( productsInBasket.size() >0 ) {
+
+            if ( (index >0) && (index < productsInBasket.size()) ) {
+
+                productsInBasket.add(productsInWarehouse.get(index));
+            }
+        }
+   }
+
     public List<Product> getProductsInWarehouse() {
         return productsInWarehouse;
     }
@@ -142,6 +164,10 @@ public class Shop {
 
     public List<Order> getListOrders() {
         return listOrders;
+    }
+
+    public int getCountOrders() {
+        return countOrders;
     }
 
     public Shop() {
