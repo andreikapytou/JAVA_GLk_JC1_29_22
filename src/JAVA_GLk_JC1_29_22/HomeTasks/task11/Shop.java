@@ -1,5 +1,12 @@
 package JAVA_GLk_JC1_29_22.HomeTasks.task11;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.nio.file.Path;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Shop {
@@ -35,11 +42,26 @@ public class Shop {
     private void unloadProductsInWarehouse(String[] productsNames) {
 
         MyData myData = new MyData();
+        Calendar dateUnload = new GregorianCalendar();
+        DateFormat df = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss", new Locale("ru"));
+        Path path = Path.of("resources", "writeAddProductsInWarehouse.txt");
+        try {
+            String writeString = "\nЗагрузка №:" +countUnload+ " товаров на склад. " + df.format(dateUnload.getTime()) +"\n\n";
+            Files.write(path, writeString.getBytes(), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         for (int i = 0; i < productsNames.length; i++) {
 
             Calendar dataProduct = myData.fixDataProduct();
             productsInWarehouse.add(new Product(i + 1, productsNames[i], dataProduct));
+            String writeString = "Товар №:" +(i +1 )+" "+ productsInWarehouse.get(i).getName() +"\n";
+            try {
+                Files.write(path, writeString.getBytes(), StandardOpenOption.APPEND);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

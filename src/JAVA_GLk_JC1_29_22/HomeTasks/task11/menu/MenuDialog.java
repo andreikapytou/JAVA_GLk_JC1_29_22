@@ -2,7 +2,16 @@ package JAVA_GLk_JC1_29_22.HomeTasks.task11.menu;
 
 import JAVA_GLk_JC1_29_22.HomeTasks.task11.Shop;
 
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.Scanner;
+import java.io.File;
+import java.nio.file.Path;
+import java.io.IOException;
 
 public class MenuDialog {
 
@@ -34,28 +43,26 @@ public class MenuDialog {
 
     private static void makeSelectedBaseAction(Shop shop, String action){
 
-        if(action.equals(ConstantMenu.LIST_PRODUCTS_ACT1)) {
-            chooseSubMenuAction123(ConstantMenu.LIST_PRODUCTS_ACT1, shop);
-        } else if (action.equals(ConstantMenu.LIST_PRODUCTS_BASKET_ACT2)) {
-            chooseSubMenuAction123(ConstantMenu.LIST_PRODUCTS_BASKET_ACT2, shop);
-        } else if (action.equals(ConstantMenu.LIST_ORDERS_ACT3)) {
-            chooseSubMenuAction123(ConstantMenu.LIST_ORDERS_ACT3 ,shop);
+        if(action.equals(ConstantMenu.LIST_PRODUCTS_ACT1) ||
+           action.equals(ConstantMenu.LIST_PRODUCTS_BASKET_ACT2) ||
+           action.equals(ConstantMenu.LIST_ORDERS_ACT3)) {
+               chooseSubMenuAction123(action, shop);
         } else if (action.equals(ConstantMenu.ADD_ORDER_ACT4)) {
-             chooseSubMenuAction4(ConstantMenu.ADD_ORDER_ACT4 , shop);
-        } else if (action.equals(ConstantMenu.DEL_ORDER_ACT5)) {
-            chooseSubMenuAction5(ConstantMenu.DEL_ORDER_ACT5, shop);
+             chooseSubMenuAction4(action , shop);
         } else if (action.equals(ConstantMenu.EDIT_ORDER_ACT6)) {
-            chooseSubMenuAction6(ConstantMenu.EDIT_ORDER_ACT6, shop);
-        } else if (action.equals(ConstantMenu.ADD_PROD_ORDER_ACT7)) {
-            chooseSubMenuAction7(ConstantMenu.ADD_PROD_ORDER_ACT7, shop);
-        } else if (action.equals(ConstantMenu.DEL_PROD_ORDER_ACT8)) {
-            chooseSubMenuAction8(ConstantMenu.DEL_PROD_ORDER_ACT8, shop);
+            chooseSubMenuAction6(action, shop);
+        } else if (action.equals(ConstantMenu.DEL_ORDER_ACT5) ||
+                   action.equals(ConstantMenu.ADD_PROD_ORDER_ACT7)) {
+            chooseSubMenuAction57(action, shop);
+        }
+        else if (action.equals(ConstantMenu.DEL_PROD_ORDER_ACT8)) {
+            chooseSubMenuAction8(action, shop);
         } else if (action.equals(ConstantMenu.ADD_PROD_BASKET_ACT9)) {
-            chooseSubMenuAction9(ConstantMenu.ADD_PROD_BASKET_ACT9, shop);
+            chooseSubMenuAction9(action, shop);
         } else if (action.equals(ConstantMenu.DEL_PROD_BASKET_ACT10)) {
-            chooseSubMenuAction10(ConstantMenu.DEL_PROD_BASKET_ACT10, shop);
+            chooseSubMenuAction10(action, shop);
         } else if (action.equals(ConstantMenu.ADD_ALL_PROD_ORDER_ACT11)) {
-            chooseSubMenuAction11(ConstantMenu.DEL_PROD_BASKET_ACT10, shop);
+            chooseSubMenuAction11(shop);
         } else if (isCheckExitCondition(action)) {
             System.out.println("Выход из программы.");
         } else {
@@ -78,11 +85,13 @@ public class MenuDialog {
     private static void chooseSubMenuAction4(String action, Shop shop) {
 
         shop.addOrder();
+        File file = Path.of("resources", "writeAddOrders.txt").toFile();
+        writeStringInFile(file, "Добавлен новый зазкз\n");
         SubMenuText.printTitleOtherAction(action);
         makeSubMenuExit();
     }
 
-    private static void chooseSubMenuAction5(String action, Shop shop) {
+    private static void chooseSubMenuAction57(String action, Shop shop) {
 
         String subAction;
         do {
@@ -99,19 +108,6 @@ public class MenuDialog {
         SubMenuText.printTitleOtherAction(action);
         makeSubMenuExit();
     }
-
-    private static void chooseSubMenuAction7(String action, Shop shop) {
-
-        String subAction;
-        do {
-            SubMenuText.printTitleOtherAction(action);
-            SubMenuText.printTexOneSubActionToOtherActions(action, shop.getListOrders().size());
-            subAction = inputStringConsole();
-            makeSelectedOneSubAction(action, subAction, shop);
-        }
-        while(!isCheckExitCondition(subAction));
-    }
-
 
     private static void chooseSubMenuAction8(String action, Shop shop) {
 
@@ -149,7 +145,7 @@ public class MenuDialog {
         while(!isCheckExitCondition(subAction));
     }
 
-    private static void chooseSubMenuAction11(String action, Shop shop) {
+    private static void chooseSubMenuAction11(Shop shop) {
 
         if (shop.getListOrders().size() >0) {
             if (shop.getProductsInBasket().size() > 0) {
@@ -193,12 +189,21 @@ public class MenuDialog {
         if(action.equals(ConstantMenu.LIST_PRODUCTS_ACT1) && (shop.getProductsInWarehouse().size()>0) ) {
             System.out.println(shop.getStringInfoListProducts("\nПеречень товаров на СКЛАДЕ:",
                     fullInfo, shop.getProductsInWarehouse()));
+            String infoProductsInWarehouse = shop.getStringInfoListProducts("\nПеречень товаров на СКЛАДЕ:",
+                    fullInfo, shop.getProductsInWarehouse());
+            File file = Path.of("resources", "infoProductsInWarehouse.txt").toFile();
+            writeStringInFile(file, infoProductsInWarehouse);
+
         } else if (action.equals(ConstantMenu.LIST_PRODUCTS_BASKET_ACT2) && (shop.getProductsInBasket().size()>0)) {
             System.out.println(shop.getStringInfoListProducts("\nПеречень товаров в КОРЗИНЕ:",
                     fullInfo, shop.getProductsInBasket()));
         } else if (action.equals(ConstantMenu.LIST_ORDERS_ACT3) && (shop.getListOrders().size()>0)) {
             System.out.print(shop.getStringInfoListOrders("\nПеречень заказов в МАГАЗИНЕ:",
                     fullInfo, shop.getListOrders()));
+            String infoOrders = shop.getStringInfoListOrders("\nПеречень заказов в МАГАЗИНЕ:",
+                    fullInfo, shop.getListOrders());
+            File file = Path.of("resources", "infoOrders.txt").toFile();
+            writeStringInFile(file, infoOrders);
         }
     }
 
@@ -270,7 +275,7 @@ public class MenuDialog {
         delProductInOtherSource(delNumber, basicAction, shop);
     }
 
-    private static void addProductInOtherSource(int addProductNumber, String basicAction, Shop shop) {
+    private static void addProductInOtherSource(int addProductNumber, String basicAction, Shop shop)  {
 
         if(basicAction.equals(ConstantMenu.ADD_PROD_ORDER_ACT7)) {
             shop.addProductCurrentOrderFromWarehouse(addProductNumber - 1);
@@ -280,6 +285,11 @@ public class MenuDialog {
             shop.addProductInBasketFromWarehouse(addProductNumber-1);
             System.out.printf("Добавлен в корзину новый товар -> %s.\n",
                     shop.getProductInWarehouse(addProductNumber-1).getName());
+            String writeString = "Добавлен в корзину новый товар -> " +
+                    shop.getProductInWarehouse(addProductNumber-1).getName() +"\n";
+
+            File file = Path.of("resources", "writeAddProductsInBasket.txt").toFile();
+            writeStringInFile(file, writeString);
         }
     }
 
@@ -358,6 +368,22 @@ public class MenuDialog {
         }
 
         return intRemoveNumber;
+    }
+
+    private static void writeStringInFile(File file, String writeString){
+
+        Calendar dateUnload = new GregorianCalendar();
+        DateFormat df = new SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss", new Locale("ru"));
+        String resultWriteString = "\n" + df.format(dateUnload.getTime()) +" "+ writeString;
+        try {
+            try(FileOutputStream fileOutputStream = new FileOutputStream(file, true)) {
+
+                fileOutputStream.write(resultWriteString.getBytes());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private static String inputStringConsole() {
