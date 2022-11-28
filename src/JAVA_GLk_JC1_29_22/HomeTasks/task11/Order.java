@@ -36,11 +36,15 @@ public class Order {
 
         String infoFullProducts = "";
         for(int i=0; i<products.size(); i++){
-            infoFullProducts = infoFullProducts.concat("Товар №:" + (i+1) +"\n"+ products.get(i).toString()+"\n");
+            if(i < (products.size()-1)) {
+                infoFullProducts = infoFullProducts.concat("Товар №:" + (i + 1) + "\n" + products.get(i).toString() + "\n");
+            } else {
+                infoFullProducts = infoFullProducts.concat("Товар №:" + (i + 1) + "\n" + products.get(i).toString() + "");
+            }
         }
 
         if(infoFullProducts.equals("")){
-            infoFullProducts = "В данном закезе товары - ОТСУТСТВУЮТ.\n";
+            infoFullProducts = "В данном закезе товары -> ОТСУТСТВУЮТ.";
         }
         return infoFullProducts;
     }
@@ -48,8 +52,16 @@ public class Order {
     public String getShortenedInfoProducts( ) {
 
         String infoProducts = "";
-        for (int i = 0; i < products.size(); i++) {
-            infoProducts = infoProducts.concat("Товар №:" + (i + 1) +" "+ products.get(i).getName() + "\n");
+        if (products.size() > 0) {
+            for (int i = 0; i < products.size(); i++) {
+                if(i < (products.size()-1)) {
+                    infoProducts = infoProducts.concat("Товар №:" + (i + 1) + " " + products.get(i).getName() + "\n");
+                } else {
+                    infoProducts = infoProducts.concat("Товар №:" + (i + 1) + " " + products.get(i).getName() + "");
+                }
+            }
+        } else {
+            infoProducts = "В данном закезе товары -> ОТСУТСТВУЮТ.";
         }
         return infoProducts;
     }
@@ -86,6 +98,11 @@ public class Order {
 
     public List<Product> getProducts() {
         return products;
+    }
+
+    public Product getProduct(int index) {
+
+        return products.get(index);
     }
 
     public Order(Integer idNumber, Collection<? extends Product> prod) {

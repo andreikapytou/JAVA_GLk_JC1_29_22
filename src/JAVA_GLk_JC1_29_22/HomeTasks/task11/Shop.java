@@ -22,10 +22,6 @@ public class Shop {
     private List<Order> listOrders = new ArrayList<>();
 
 
-    private void basket() {
-
-    }
-
     public void unloadNextProductsInWarehouse() {
 
         if (countUnload < arrProductNames.length) {
@@ -67,15 +63,25 @@ public class Shop {
         if (fullInfo) {
             System.out.println(source + " Полная информация.");
             for (int i = 0; i < listProducts.size(); i++) {
-                infoProducts = infoProducts.concat("Товар №:" + (i + 1) + "\n" + listProducts.get(i).toString() + "\n\n");
+                if(i<(listProducts.size()-1)) {
+                    infoProducts = infoProducts.concat("\nТовар №:" + (i + 1) + "\n" + listProducts.get(i).toString() + "\n");
+                } else {
+                    infoProducts = infoProducts.concat("\nТовар №:" + (i + 1) + "\n" + listProducts.get(i).toString() + "");
+                }
             }
         } else {
             System.out.println(source + " Сокращенная информация.");
             for (int i = 0; i < listProducts.size(); i++) {
-                infoProducts = infoProducts.concat("Товар №:" + (i + 1) + " " + listProducts.get(i).getName() + "\n");
+                if (i==0) {
+                    infoProducts = infoProducts.concat("\nТовар №:" + (i + 1) + " " + listProducts.get(i).getName() + "\n");
+                }
+                else if(i<(listProducts.size()-1)) {
+                    infoProducts = infoProducts.concat("Товар №:" + (i + 1) + " " + listProducts.get(i).getName() + "\n");
+                } else {
+                    infoProducts = infoProducts.concat("Товар №:" + (i + 1) + " " + listProducts.get(i).getName() + "");
+                }
             }
         }
-
         return infoProducts;
     }
 
@@ -85,31 +91,28 @@ public class Shop {
         if (fullInfo) {
             System.out.println(source + " Полная информация.");
             for (int i = 0; i < listOrders.size(); i++) {
-                infoOrders = infoOrders.concat("Заказ №:" + (i + 1) + "\n" + listOrders.get(i).toString() + "\n");
+                infoOrders = infoOrders.concat("\nЗаказ №:" + (i + 1) + "\n" + listOrders.get(i).toString() + "\n");
             }
         } else {
             System.out.println(source + " Сокращенная информация.");
             for (int i = 0; i < listOrders.size(); i++) {
 
-                infoOrders = infoOrders.concat("Заказ №:" + (i + 1) + "\n" + listOrders.get(i).getShortenedInfoProducts() + "\n");
+                if(listOrders.get(i).getProducts().size() > 0) {
+                    infoOrders = infoOrders.concat("\nЗаказ №:" + (i + 1) + "\n" +
+                            listOrders.get(i).getShortenedInfoProducts() + "\n");
+                } else {
+                    infoOrders = infoOrders.concat("\nЗаказ №:" + (i + 1) + " - " +
+                            listOrders.get(i).getShortenedInfoProducts() + "\n");
+                }
             }
         }
-
         return infoOrders;
     }
 
-    public void startApplication() {
 
-        //productsInWarehouse.forEach( nextProduct -> System.out.println(nextProduct.toString()) );
+    public void addProductInWarehouse(Product product){
 
-        Order order = new Order(1);
-        order.addProducts(productsInWarehouse);
-        order.addProduct(new Product(666, "Галеты"));
-        listOrders.add(order);
-        listOrders.add(new Order(2, productsInWarehouse));
-        listOrders.add(new Order(3, productsInWarehouse));
-        System.out.print(getStringInfoListOrders("Перечень заказов в МАГАЗИНЕ:", false, listOrders));
-
+        productsInWarehouse.add(product);
     }
 
     public Product getProductInWarehouse(int index){
@@ -128,6 +131,28 @@ public class Shop {
         }
     }
 
+    public void delProductInCurrentOrder(int index){
+        if(countOrders > 0 && (listOrders.get(countOrders-1).getProducts().size() > 0)) {
+            listOrders.get(countOrders-1).delProduct(index);
+        } else {
+            System.out.printf("Введенный номер №:%d товара не входит в диапазон допустимых значений.\n", index);
+        }
+    }
+
+    public Product getProductInCurrentOrder(int index){
+
+      return listOrders.get(countOrders-1).getProduct(index);
+    }
+
+    public int getSizeProductsInCurrentOrder(){
+
+        if(countOrders > 0) {
+
+            return listOrders.get(countOrders - 1).getProducts().size();
+        }
+        return 0;
+    }
+
     public void addOrder(){
         listOrders.add(new Order(fixIdOrder++));
         countOrders++;
@@ -143,15 +168,22 @@ public class Shop {
         productsInBasket.add(productsInWarehouse.get(index));
     }
 
-    public void removeProductInBasket(int index){
+    public void addProductsInBasketInCurrentOrder(){
 
-        if ( productsInBasket.size() >0 ) {
-
-            if ( (index >0) && (index < productsInBasket.size()) ) {
-
-                productsInBasket.add(productsInWarehouse.get(index));
-            }
+        if(countOrders > 0) {
+            listOrders.get(countOrders-1).addProducts(productsInBasket);
+            productsInBasket.clear();
         }
+    }
+
+    public Product getProductInBasket(int index) {
+        return productsInBasket.get(index);
+    }
+
+    public void delProductInBasket(int index){
+
+      productsInBasket.remove(index);
+
    }
 
     public List<Product> getProductsInWarehouse() {

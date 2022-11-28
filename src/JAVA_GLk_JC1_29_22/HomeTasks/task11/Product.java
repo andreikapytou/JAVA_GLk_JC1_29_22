@@ -41,7 +41,8 @@ public class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product product)) return false;
-        return Objects.equals(idNumber, product.idNumber) && Objects.equals(name, product.name) && Objects.equals(dateOfManufacture, product.dateOfManufacture);
+        return Objects.equals(idNumber, product.idNumber) && Objects.equals(name, product.name) &&
+                Objects.equals(dateOfManufacture, product.dateOfManufacture);
     }
 
     @Override
